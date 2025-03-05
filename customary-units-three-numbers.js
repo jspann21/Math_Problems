@@ -24,10 +24,6 @@ function generateProblem() {
         {
             text: `A red ribbon is ${num1} inches long. A blue ribbon is ${num2} inches longer than the red ribbon. If a yellow ribbon is ${num3} inches longer than the blue ribbon, how long is the yellow ribbon?`,
             answer: num1 + num2 + num3
-        },
-        {
-            text: `Sam has ${num1} marbles. Tom has ${num2} more marbles than Sam. If Jim has ${num3} more marbles than Tom, how many marbles does Jim have?`,
-            answer: num1 + num2 + num3
         }
     ];
 
@@ -227,6 +223,8 @@ function createStar() {
     star.className = 'star';
     star.textContent = '⭐';
     star.style.left = Math.random() * window.innerWidth + 'px';
+    star.style.fontSize = `${Math.random() * 20 + 20}px`; // Random size between 20-40px
+    star.style.animationDuration = `${Math.random() * 1.5 + 0.5}s`; // Random duration between 0.5-2s
     return star;
 }
 
@@ -289,8 +287,6 @@ function handleOptionClick(option, index) {
         // Create and animate stars
         for (let i = 0; i < 15; i++) {
             const star = createStar();
-            star.style.fontSize = `${Math.random() * 20 + 20}px`; // Random size between 20-40px
-            star.style.animationDuration = `${Math.random() * 1.5 + 0.5}s`; // Random duration between 0.5-2s
             starsContainer.appendChild(star);
             setTimeout(() => star.remove(), 2000);
         }

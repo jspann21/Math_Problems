@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun Math Problems!</title>
+    <title>Math Problems Hub</title>
     <style>
         body {
             font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
@@ -16,253 +16,102 @@
             min-height: 100vh;
         }
 
-        .main-content {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            max-width: 1200px;
+        .container {
+            max-width: 800px;
             width: 100%;
-            margin-bottom: 50px;
-            position: relative;
+            text-align: center;
+            margin-top: 40px;
         }
 
-        .problem-area {
-            flex: 1;
+        h1 {
+            color: #2196F3;
+            font-size: 2.5em;
+            margin-bottom: 40px;
         }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
+        .topic-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .topic-title {
+            color: #4CAF50;
+            font-size: 1.5em;
             margin-bottom: 20px;
         }
 
-        .toggle-scratchpad {
-            padding: 8px 15px;
-            font-size: 16px;
-            background-color: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: auto;
-        }
-
-        .toggle-scratchpad:hover {
-            background-color: #1976D2;
-        }
-
-        .scratchpad-area {
-            display: none;
-            width: 350px;
-            min-height: 550px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 10px;
-        }
-
-        .scratchpad-area.open {
-            display: block;
-        }
-
-        .scratchpad-controls {
+        .problem-links {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            justify-content: center;
-        }
-
-        .scratchpad-button {
-            padding: 8px 15px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .scratchpad-button:hover {
-            background-color: #45a049;
-        }
-
-        .scratchpad-button.clear {
-            background-color: #ff4444;
-        }
-
-        .scratchpad-button.clear:hover {
-            background-color: #ff3333;
-        }
-
-        .scratchpad-canvas {
-            width: 100%;
-            height: 500px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            touch-action: none;
-            cursor: crosshair;
-            background-color: #fff;
-        }
-
-        .problem-type {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #fff;
-            padding: 10px;
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-            border-top: 2px solid #4CAF50;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            width: 100%;
-            text-align: center;
-        }
-
-        .problem {
-            font-size: 24px;
-            margin: 20px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            flex-direction: column;
             gap: 15px;
-            margin: 20px;
         }
 
-        .option {
-            padding: 20px;
-            font-size: 24px;
+        .problem-link {
+            display: block;
+            padding: 15px 20px;
             background-color: #4CAF50;
             color: white;
-            border: none;
+            text-decoration: none;
             border-radius: 10px;
-            cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1.2em;
         }
 
-        .option:hover {
-            transform: scale(1.05);
+        .problem-link:hover {
+            transform: scale(1.02);
             background-color: #45a049;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        .option.wrong {
-            background-color: #ff4444;
-            animation: shake 0.5s;
+        .coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
-        .option.correct {
+        .coming-soon:hover {
+            transform: none;
             background-color: #4CAF50;
-            animation: correct 0.5s;
         }
 
-        .navigation {
-            margin-top: 20px;
-        }
-
-        .nav-button {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin: 0 10px;
-            background-color: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .nav-button:hover {
-            background-color: #1976D2;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        @keyframes correct {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .stars {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .star {
-            position: absolute;
-            color: gold;
-            font-size: 30px;
-            animation: star-fall 1s ease-out forwards;
-        }
-
-        @keyframes star-fall {
-            0% {
-                transform: translateY(-50px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <div class="problem-area">
-            <div class="header-container">
-                <h1>Fun Math Problems! 🎨</h1>
-                <button class="toggle-scratchpad" id="toggle-scratchpad">📝 Open Scratchpad</button>
-            </div>
-            <div class="container">
-                <div class="problem" id="problem-text"></div>
-                <div class="options" id="options-container">
-                    <button class="option"></button>
-                    <button class="option"></button>
-                    <button class="option"></button>
-                    <button class="option"></button>
-                </div>
-                <div class="navigation">
-                    <button class="nav-button" id="prev-btn">← Previous</button>
-                    <button class="nav-button" id="next-btn">Next →</button>
-                </div>
+    <div class="container">
+        <h1>🎨 Fun Math Problems!</h1>
+        
+        <div class="topic-section">
+            <h2 class="topic-title">Customary Units of Length</h2>
+            <div class="problem-links">
+                <a href="customary-units-three-numbers.html" class="problem-link">
+                    📏 Using 3 One or Two Digit Numbers
+                </a>
+                <a href="customary-units-up-to-100.html" class="problem-link">
+                    📐 Units Up to 100
+                </a>
             </div>
         </div>
-        <div class="scratchpad-area" id="scratchpad-area">
-            <div class="scratchpad-controls">
-                <button class="scratchpad-button" id="undo-btn">↩️ Undo</button>
-                <button class="scratchpad-button" id="redo-btn">↪️ Redo</button>
-                <button class="scratchpad-button clear" id="clear-btn">🗑️ Clear</button>
-                <button class="scratchpad-button" id="close-scratchpad">❌ Close</button>
+
+        <div class="topic-section">
+            <h2 class="topic-title">More Topics Coming Soon!</h2>
+            <div class="problem-links">
+                <span class="problem-link coming-soon">
+                    🔢 Addition and Subtraction
+                </span>
+                <span class="problem-link coming-soon">
+                    ✖️ Multiplication and Division
+                </span>
+                <span class="problem-link coming-soon">
+                    📊 Fractions and Decimals
+                </span>
             </div>
-            <canvas class="scratchpad-canvas" id="scratchpad"></canvas>
         </div>
     </div>
-    <div class="problem-type">
-        Customary Units of Length: Using 3 One or Two Digit Numbers
-    </div>
-    <div class="stars" id="stars-container"></div>
-    <script src="script.js"></script>
 </body>
 </html> 
