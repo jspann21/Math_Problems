@@ -6,6 +6,11 @@ function generateProblem() {
                   'Olivia', 'William', 'Ava', 'Benjamin', 'Isabella', 'Lucas', 'Mia', 'Micah', 
                   'Charlotte', 'Theodore', 'Amelia', 'Jack', 'Harper', 'Oliver'];
 
+    // Helper function for unit pluralization
+    function getUnit(value, unit) {
+        return value === 1 ? unit : unit + 's';
+    }
+
     // Get two different random names
     let name1Index = Math.floor(Math.random() * names.length);
     let name2Index;
@@ -30,157 +35,157 @@ function generateProblem() {
     const problemTypes = [
         // Tree and plant measurements (in feet)
         {
-            text: `There are two trees in ${name1}'s backyard. One is ${mediumNumber} feet tall, and the pine tree is ${getValidSecondNumber(mediumNumber)} feet taller. How tall is the pine tree?`,
+            text: `There are two trees in ${name1}'s backyard. One is ${mediumNumber} ${getUnit(mediumNumber, 'foot')} tall, and the pine tree is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'foot')} taller. How tall is the pine tree?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s rose bush is ${smallNumber} feet tall. ${name2}'s rose bush is ${getValidSecondNumber(smallNumber)} feet taller. How tall is ${name2}'s rose bush?`,
+            text: `${name1}'s rose bush is ${smallNumber} ${getUnit(smallNumber, 'foot')} tall. ${name2}'s rose bush is ${getValidSecondNumber(smallNumber)} ${getUnit(getValidSecondNumber(smallNumber), 'foot')} taller. How tall is ${name2}'s rose bush?`,
             answer: smallNumber + getValidSecondNumber(smallNumber)
         },
         
         // Indoor measurements (in feet)
         {
-            text: `${name1} has a rug that is ${mediumNumber} feet long. ${name2}'s rug is ${getValidSecondNumber(mediumNumber)} feet longer. How long is ${name2}'s rug?`,
+            text: `${name1} has a rug that is ${mediumNumber} ${getUnit(mediumNumber, 'foot')} long. ${name2}'s rug is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'foot')} longer. How long is ${name2}'s rug?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s hallway is ${largeNumber} feet long. ${name2}'s hallway is ${smallNumber} feet shorter. How long is ${name2}'s hallway?`,
+            text: `${name1}'s hallway is ${largeNumber} ${getUnit(largeNumber, 'foot')} long. ${name2}'s hallway is ${smallNumber} ${getUnit(smallNumber, 'foot')} shorter. How long is ${name2}'s hallway?`,
             answer: largeNumber - smallNumber
         },
         
         // Playground measurements (in feet)
         {
-            text: `${name1} drew a hopscotch court ${mediumNumber} feet long. ${name2} drew one ${smallNumber} feet shorter. How long is ${name2}'s hopscotch court?`,
+            text: `${name1} drew a hopscotch court ${mediumNumber} ${getUnit(mediumNumber, 'foot')} long. ${name2} drew one ${smallNumber} ${getUnit(smallNumber, 'foot')} shorter. How long is ${name2}'s hopscotch court?`,
             answer: mediumNumber - smallNumber
         },
         {
-            text: `${name1}'s jump rope is ${largeNumber} feet long. ${name2}'s jump rope is ${smallNumber} feet shorter. How long is ${name2}'s jump rope?`,
+            text: `${name1}'s jump rope is ${largeNumber} ${getUnit(largeNumber, 'foot')} long. ${name2}'s jump rope is ${smallNumber} ${getUnit(smallNumber, 'foot')} shorter. How long is ${name2}'s jump rope?`,
             answer: largeNumber - smallNumber
         },
         
         // Toy measurements (in inches)
         {
-            text: `At the toy store, ${name1} found a toy car ${mediumNumber} inches long. ${name2} found one that is ${getValidSecondNumber(mediumNumber)} inches longer. How long is ${name2}'s toy car?`,
+            text: `At the toy store, ${name1} found a toy car ${mediumNumber} ${getUnit(mediumNumber, 'inch')} long. ${name2} found one that is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'inch')} longer. How long is ${name2}'s toy car?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s model airplane is ${largeNumber} inches long. ${name2}'s is ${smallNumber} inches shorter. How long is ${name2}'s model airplane?`,
+            text: `${name1}'s model airplane is ${largeNumber} ${getUnit(largeNumber, 'inch')} long. ${name2}'s is ${smallNumber} ${getUnit(smallNumber, 'inch')} shorter. How long is ${name2}'s model airplane?`,
             answer: largeNumber - smallNumber
         },
         
         // Yard measurements (in yards)
         {
-            text: `${name1}'s garden is ${mediumNumber} yards long. ${name2}'s garden is ${getValidSecondNumber(mediumNumber)} yards longer. How long is ${name2}'s garden?`,
+            text: `${name1}'s garden is ${mediumNumber} ${getUnit(mediumNumber, 'yard')} long. ${name2}'s garden is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'yard')} longer. How long is ${name2}'s garden?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s driveway is ${largeNumber} yards long. ${name2}'s driveway is ${smallNumber} yards shorter. How long is ${name2}'s driveway?`,
+            text: `${name1}'s driveway is ${largeNumber} ${getUnit(largeNumber, 'yard')} long. ${name2}'s driveway is ${smallNumber} ${getUnit(smallNumber, 'yard')} shorter. How long is ${name2}'s driveway?`,
             answer: largeNumber - smallNumber
         },
         
         // Sports field measurements (in yards)
         {
-            text: `${name1} can throw a football ${mediumNumber} yards. ${name2} can throw it ${getValidSecondNumber(mediumNumber)} yards further. How far can ${name2} throw the football?`,
+            text: `${name1} can throw a football ${mediumNumber} ${getUnit(mediumNumber, 'yard')}. ${name2} can throw it ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'yard')} further. How far can ${name2} throw the football?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1} ran ${largeNumber} yards in practice. ${name2} ran ${smallNumber} yards less. How far did ${name2} run?`,
+            text: `${name1} ran ${largeNumber} ${getUnit(largeNumber, 'yard')} in practice. ${name2} ran ${smallNumber} ${getUnit(smallNumber, 'yard')} less. How far did ${name2} run?`,
             answer: largeNumber - smallNumber
         },
         
         // Craft projects (in inches)
         {
-            text: `${name1}'s paper chain is ${mediumNumber} inches long. ${name2}'s is ${getValidSecondNumber(mediumNumber)} inches longer. How long is ${name2}'s paper chain?`,
+            text: `${name1}'s paper chain is ${mediumNumber} ${getUnit(mediumNumber, 'inch')} long. ${name2}'s is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'inch')} longer. How long is ${name2}'s paper chain?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1} made a bookmark ${smallNumber} inches long. ${name2}'s bookmark is ${getValidSecondNumber(smallNumber)} inches longer. How long is ${name2}'s bookmark?`,
+            text: `${name1} made a bookmark ${smallNumber} ${getUnit(smallNumber, 'inch')} long. ${name2}'s bookmark is ${getValidSecondNumber(smallNumber)} ${getUnit(getValidSecondNumber(smallNumber), 'inch')} longer. How long is ${name2}'s bookmark?`,
             answer: smallNumber + getValidSecondNumber(smallNumber)
         },
         
         // Building measurements (in feet)
         {
-            text: `${name1}'s treehouse is ${mediumNumber} feet tall. ${name2}'s treehouse is ${getValidSecondNumber(mediumNumber)} feet taller. How tall is ${name2}'s treehouse?`,
+            text: `${name1}'s treehouse is ${mediumNumber} ${getUnit(mediumNumber, 'foot')} tall. ${name2}'s treehouse is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'foot')} taller. How tall is ${name2}'s treehouse?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s fence is ${largeNumber} feet long. ${name2}'s fence is ${smallNumber} feet shorter. How long is ${name2}'s fence?`,
+            text: `${name1}'s fence is ${largeNumber} ${getUnit(largeNumber, 'foot')} long. ${name2}'s fence is ${smallNumber} ${getUnit(smallNumber, 'foot')} shorter. How long is ${name2}'s fence?`,
             answer: largeNumber - smallNumber
         },
         
         // Ribbon and string measurements (in inches)
         {
-            text: `${name1} needs ${mediumNumber} inches of ribbon. ${name2} needs ${getValidSecondNumber(mediumNumber)} inches more. How many inches of ribbon does ${name2} need?`,
+            text: `${name1} needs ${mediumNumber} ${getUnit(mediumNumber, 'inch')} of ribbon. ${name2} needs ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'inch')} more. How many inches of ribbon does ${name2} need?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1} has ${mediumNumber} inches of string. ${name2} has ${smallNumber} inches less. How many inches of string does ${name2} have?`,
+            text: `${name1} has ${mediumNumber} ${getUnit(mediumNumber, 'inch')} of string. ${name2} has ${smallNumber} ${getUnit(smallNumber, 'inch')} less. How many inches of string does ${name2} have?`,
             answer: mediumNumber - smallNumber
         },
         
         // Path and trail measurements (in yards)
         {
-            text: `${name1}'s walking path is ${mediumNumber} yards long. ${name2}'s is ${getValidSecondNumber(mediumNumber)} yards longer. How long is ${name2}'s path?`,
+            text: `${name1}'s walking path is ${mediumNumber} ${getUnit(mediumNumber, 'yard')} long. ${name2}'s is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'yard')} longer. How long is ${name2}'s path?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s nature trail is ${largeNumber} yards long. ${name2}'s trail is ${smallNumber} yards shorter. How long is ${name2}'s trail?`,
+            text: `${name1}'s nature trail is ${largeNumber} ${getUnit(largeNumber, 'yard')} long. ${name2}'s trail is ${smallNumber} ${getUnit(smallNumber, 'yard')} shorter. How long is ${name2}'s trail?`,
             answer: largeNumber - smallNumber
         },
         
         // School supplies (in inches)
         {
-            text: `${name1}'s ruler is ${smallNumber} inches long. ${name2}'s ruler is ${getValidSecondNumber(smallNumber)} inches longer. How long is ${name2}'s ruler?`,
+            text: `${name1}'s ruler is ${smallNumber} ${getUnit(smallNumber, 'inch')} long. ${name2}'s ruler is ${getValidSecondNumber(smallNumber)} ${getUnit(getValidSecondNumber(smallNumber), 'inch')} longer. How long is ${name2}'s ruler?`,
             answer: smallNumber + getValidSecondNumber(smallNumber)
         },
         {
-            text: `${name1}'s pencil box is ${mediumNumber} inches long. ${name2}'s is ${smallNumber} inches shorter. How long is ${name2}'s pencil box?`,
+            text: `${name1}'s pencil box is ${mediumNumber} ${getUnit(mediumNumber, 'inch')} long. ${name2}'s is ${smallNumber} ${getUnit(smallNumber, 'inch')} shorter. How long is ${name2}'s pencil box?`,
             answer: mediumNumber - smallNumber
         },
         
         // Garden features (in feet)
         {
-            text: `${name1}'s garden bed is ${mediumNumber} feet long. ${name2}'s is ${getValidSecondNumber(mediumNumber)} feet longer. How long is ${name2}'s garden bed?`,
+            text: `${name1}'s garden bed is ${mediumNumber} ${getUnit(mediumNumber, 'foot')} long. ${name2}'s is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'foot')} longer. How long is ${name2}'s garden bed?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s row of flowers is ${mediumNumber} feet long. ${name2}'s row is ${smallNumber} feet shorter. How long is ${name2}'s row of flowers?`,
+            text: `${name1}'s row of flowers is ${mediumNumber} ${getUnit(mediumNumber, 'foot')} long. ${name2}'s row is ${smallNumber} ${getUnit(smallNumber, 'foot')} shorter. How long is ${name2}'s row of flowers?`,
             answer: mediumNumber - smallNumber
         },
         
         // Playground equipment (in feet)
         {
-            text: `${name1}'s slide is ${mediumNumber} feet long. ${name2}'s slide is ${getValidSecondNumber(mediumNumber)} feet longer. How long is ${name2}'s slide?`,
+            text: `${name1}'s slide is ${mediumNumber} ${getUnit(mediumNumber, 'foot')} long. ${name2}'s slide is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'foot')} longer. How long is ${name2}'s slide?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s monkey bars are ${largeNumber} feet long. ${name2}'s are ${smallNumber} feet shorter. How long are ${name2}'s monkey bars?`,
+            text: `${name1}'s monkey bars are ${largeNumber} ${getUnit(largeNumber, 'foot')} long. ${name2}'s are ${smallNumber} ${getUnit(smallNumber, 'foot')} shorter. How long are ${name2}'s monkey bars?`,
             answer: largeNumber - smallNumber
         },
         
         // Sports equipment (in inches)
         {
-            text: `${name1}'s baseball bat is ${mediumNumber} inches long. ${name2}'s bat is ${getValidSecondNumber(mediumNumber)} inches longer. How long is ${name2}'s bat?`,
+            text: `${name1}'s baseball bat is ${mediumNumber} ${getUnit(mediumNumber, 'inch')} long. ${name2}'s bat is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'inch')} longer. How long is ${name2}'s bat?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         {
-            text: `${name1}'s hockey stick is ${largeNumber} inches long. ${name2}'s is ${smallNumber} inches shorter. How long is ${name2}'s hockey stick?`,
+            text: `${name1}'s hockey stick is ${largeNumber} ${getUnit(largeNumber, 'inch')} long. ${name2}'s is ${smallNumber} ${getUnit(smallNumber, 'inch')} shorter. How long is ${name2}'s hockey stick?`,
             answer: largeNumber - smallNumber
         },
         
         // Art supplies (in inches)
         {
-            text: `${name1}'s paintbrush is ${smallNumber} inches long. ${name2}'s paintbrush is ${getValidSecondNumber(smallNumber)} inches longer. How long is ${name2}'s paintbrush?`,
+            text: `${name1}'s paintbrush is ${smallNumber} ${getUnit(smallNumber, 'inch')} long. ${name2}'s paintbrush is ${getValidSecondNumber(smallNumber)} ${getUnit(getValidSecondNumber(smallNumber), 'inch')} longer. How long is ${name2}'s paintbrush?`,
             answer: smallNumber + getValidSecondNumber(smallNumber)
         },
         {
-            text: `${name1}'s canvas is ${mediumNumber} inches wide. ${name2}'s canvas is ${getValidSecondNumber(mediumNumber)} inches wider. How wide is ${name2}'s canvas?`,
+            text: `${name1}'s canvas is ${mediumNumber} ${getUnit(mediumNumber, 'inch')} wide. ${name2}'s canvas is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'inch')} wider. How wide is ${name2}'s canvas?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         },
         
         // Building blocks (in inches)
         {
-            text: `${name1}'s tower of blocks is ${mediumNumber} inches tall. ${name2}'s tower is ${getValidSecondNumber(mediumNumber)} inches taller. How tall is ${name2}'s tower?`,
+            text: `${name1}'s tower of blocks is ${mediumNumber} ${getUnit(mediumNumber, 'inch')} tall. ${name2}'s tower is ${getValidSecondNumber(mediumNumber)} ${getUnit(getValidSecondNumber(mediumNumber), 'inch')} taller. How tall is ${name2}'s tower?`,
             answer: mediumNumber + getValidSecondNumber(mediumNumber)
         }
     ];
