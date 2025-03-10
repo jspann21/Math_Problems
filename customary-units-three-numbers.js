@@ -8,6 +8,9 @@ function generateProblem() {
 
     // Helper function for unit pluralization
     function getUnit(value, unit) {
+        if (unit === 'foot') {
+            return value === 1 ? 'foot' : 'feet';
+        }
         return value === 1 ? unit : unit + 's';
     }
 
@@ -406,16 +409,6 @@ function shuffleArray(array) {
     return array;
 }
 
-function createStar() {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.textContent = '⭐';
-    star.style.left = Math.random() * window.innerWidth + 'px';
-    star.style.fontSize = `${Math.random() * 20 + 20}px`; // Random size between 20-40px
-    star.style.animationDuration = `${Math.random() * 1.5 + 0.5}s`; // Random duration between 0.5-2s
-    return star;
-}
-
 // Game state
 let currentProblem = null;
 let currentProblemIndex = 0;
@@ -432,7 +425,6 @@ const problemText = document.getElementById('problem-text');
 const optionsContainer = document.getElementById('options-container');
 const prevButton = document.getElementById('prev-btn');
 const nextButton = document.getElementById('next-btn');
-const starsContainer = document.getElementById('stars-container');
 
 // Scratchpad elements
 const scratchpadArea = document.getElementById('scratchpad-area');
@@ -470,29 +462,14 @@ function handleOptionClick(option, index) {
     const selectedAnswer = parseInt(option.textContent);
     
     if (selectedAnswer === currentProblem.answer) {
-        option.classList.add('correct');
-        
-        // Create and animate stars
-        for (let i = 0; i < 15; i++) {
-            const star = createStar();
-            starsContainer.appendChild(star);
-            setTimeout(() => star.remove(), 2000);
-        }
-
-        // Disable all options temporarily
-        const options = optionsContainer.getElementsByClassName('option');
-        Array.from(options).forEach(opt => opt.disabled = true);
-
-        // Move to next problem after a delay
-        setTimeout(() => {
+        animationSystem.handleCorrectAnswer(option, optionsContainer.getElementsByClassName('option'), () => {
             if (currentProblemIndex < totalProblems - 1) {
                 currentProblemIndex++;
                 displayProblem();
             }
-        }, 1500);
+        });
     } else {
-        option.classList.add('wrong');
-        setTimeout(() => option.classList.remove('wrong'), 500);
+        animationSystem.handleWrongAnswer(option);
     }
 }
 
@@ -529,5 +506,4 @@ nextButton.onclick = () => {
 };
 
 // Initialize the first problem
-displayProblem(); 
 displayProblem(); 
