@@ -48,4 +48,4 @@ class AnimationSystem {
 }
 
 // Export a single instance to be used across all problems
-const animationSystem = new AnimationSystem(); 
+export const animationSystem = new AnimationSystem(); 

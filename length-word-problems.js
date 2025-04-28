@@ -1,3 +1,5 @@
+import { animationSystem } from './animations.js';
+
 // Scratchpad functionality
 class Scratchpad {
     constructor(canvas) {
@@ -282,149 +284,124 @@ let currentProblemIndex = 0;
 const problems = [];
 const totalProblems = 50;
 
-// Generate all problems at start
-for (let i = 0; i < totalProblems; i++) {
-    problems.push(generateProblem());
-}
+// Removed DOM element getters, initialization, problem generation loop, handlers from global scope
 
-// DOM elements
-const problemText = document.getElementById('problem-text');
-const optionsContainer = document.getElementById('options-container');
-const prevButton = document.getElementById('prev-btn');
-const nextButton = document.getElementById('next-btn');
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Moved initialization code inside DOMContentLoaded
 
-// Scratchpad elements
-const scratchpadArea = document.getElementById('scratchpad-area');
-const scratchpadCanvas = document.getElementById('scratchpad');
-const toggleScratchpadBtn = document.getElementById('toggle-scratchpad');
-const closeScratchpadBtn = document.getElementById('close-scratchpad');
-const undoBtn = document.getElementById('undo-btn');
-const redoBtn = document.getElementById('redo-btn');
-const clearBtn = document.getElementById('clear-btn');
+    // DOM elements
+    const problemText = document.getElementById('problem-text');
+    const optionsContainer = document.getElementById('options-container');
+    const prevButton = document.getElementById('prev-btn');
+    const nextButton = document.getElementById('next-btn');
 
-// Initialize scratchpad
-const scratchpad = new Scratchpad(scratchpadCanvas);
+    // Scratchpad elements
+    const scratchpadArea = document.getElementById('scratchpad-area');
+    const scratchpadCanvas = document.getElementById('scratchpad');
+    const toggleScratchpadBtn = document.getElementById('toggle-scratchpad');
+    const closeScratchpadBtn = document.getElementById('close-scratchpad');
+    const undoBtn = document.getElementById('undo-btn');
+    const redoBtn = document.getElementById('redo-btn');
+    const clearBtn = document.getElementById('clear-btn');
 
-// Scratchpad control handlers
-toggleScratchpadBtn.onclick = () => {
-    scratchpadArea.classList.add('open');
-    toggleScratchpadBtn.style.display = 'none';
-    requestAnimationFrame(() => {
-        scratchpad.initialize();
-    });
-};
+    // Generate all problems at start
+    for (let i = 0; i < totalProblems; i++) {
+        problems.push(generateProblem());
+    }
 
-closeScratchpadBtn.onclick = () => {
-    scratchpadArea.classList.remove('open');
-    toggleScratchpadBtn.style.display = 'block';
-};
+    // Initialize scratchpad
+    const scratchpad = new Scratchpad(scratchpadCanvas);
+    scratchpad.initialize(); // Initialize scratchpad dimensions and context
 
-undoBtn.onclick = () => scratchpad.undo();
-redoBtn.onclick = () => scratchpad.redo();
-clearBtn.onclick = () => scratchpad.clear();
+    // Scratchpad control handlers
+    toggleScratchpadBtn.onclick = () => {
+        scratchpadArea.classList.toggle('open');
+        toggleScratchpadBtn.textContent = scratchpadArea.classList.contains('open') ? '❌ Close Scratchpad' : '📝 Open Scratchpad';
+        if (scratchpadArea.classList.contains('open')) {
+             scratchpad.setCanvasSize(); // Ensure canvas size is correct when opened
+        }
+    };
 
-// Event handlers
-function handleOptionClick(option, index) {
-    const selectedAnswer = parseInt(option.textContent);
-    
-    if (selectedAnswer === currentProblem.answer) {
-        animationSystem.handleCorrectAnswer(option, optionsContainer.getElementsByClassName('option'), () => {
-            if (currentProblemIndex < totalProblems - 1) {
-                currentProblemIndex++;
-                displayProblem();
+    closeScratchpadBtn.onclick = () => {
+        scratchpadArea.classList.remove('open');
+        toggleScratchpadBtn.textContent = '📝 Open Scratchpad';
+    };
+
+    undoBtn.onclick = () => scratchpad.undo();
+    redoBtn.onclick = () => scratchpad.redo();
+    clearBtn.onclick = () => scratchpad.clear();
+
+    // Event handlers
+    function handleOptionClick(option, index) {
+        const selectedAnswer = parseInt(option.textContent);
+        
+        // Prevent clicking after answer
+        if(option.disabled) return;
+
+        if (selectedAnswer === currentProblem.answer) {
+            animationSystem.handleCorrectAnswer(option, optionsContainer.getElementsByClassName('option'), () => {
+                 // Don't auto-advance, let user click next
+                // if (currentProblemIndex < totalProblems - 1) {
+                //     currentProblemIndex++;
+                //     displayProblem();
+                // }
+            });
+        } else {
+            animationSystem.handleWrongAnswer(option);
+        }
+    }
+
+    function displayProblem() {
+        currentProblem = problems[currentProblemIndex];
+        problemText.textContent = currentProblem.text;
+        
+        const options = optionsContainer.getElementsByClassName('option');
+        // Ensure options container is cleared if structure changes (though unlikely here)
+        // optionsContainer.innerHTML = ''; 
+        Array.from(options).forEach((option, index) => {
+            // Check if currentProblem.options exists and has enough elements
+            if (currentProblem.options && currentProblem.options.length > index) {
+                option.textContent = currentProblem.options[index];
+                option.className = 'option'; // Reset classes
+                option.disabled = false;
+                option.onclick = () => handleOptionClick(option, index);
+            } else {
+                // Handle cases where there might be fewer options than buttons
+                option.style.display = 'none'; // Hide unused buttons
             }
         });
-    } else {
-        animationSystem.handleWrongAnswer(option);
+        
+        // Ensure all buttons are visible initially if needed
+        Array.from(options).forEach(opt => { if(opt.style.display === 'none') opt.style.display = ''; });
+
+        // Update navigation buttons
+        prevButton.disabled = currentProblemIndex === 0;
+        // Allow next button even if it's the last generated problem (user might want to re-answer?)
+        // nextButton.disabled = currentProblemIndex === totalProblems - 1; 
+        nextButton.disabled = false; // Allow clicking next to generate potentially new (if logic changes) or cycle
     }
-}
 
-function displayProblem() {
-    currentProblem = problems[currentProblemIndex];
-    problemText.textContent = currentProblem.text;
-    
-    const options = optionsContainer.getElementsByClassName('option');
-    Array.from(options).forEach((option, index) => {
-        option.textContent = currentProblem.options[index];
-        option.className = 'option';
-        option.disabled = false;
-        option.onclick = () => handleOptionClick(option, index);
-    });
+    // Navigation handlers
+    prevButton.onclick = () => {
+        if (currentProblemIndex > 0) {
+            currentProblemIndex--;
+            displayProblem();
+        }
+    };
 
-    // Update navigation buttons
-    prevButton.disabled = currentProblemIndex === 0;
-    nextButton.disabled = currentProblemIndex === totalProblems - 1;
-}
-
-// Navigation handlers
-prevButton.onclick = () => {
-    if (currentProblemIndex > 0) {
-        currentProblemIndex--;
+    nextButton.onclick = () => {
+        // Simple loop back for now, could regenerate problems
+        currentProblemIndex = (currentProblemIndex + 1) % totalProblems;
         displayProblem();
-    }
-};
+        // if (currentProblemIndex < totalProblems - 1) {
+        //     currentProblemIndex++;
+        //     displayProblem();
+        // }
+    };
 
-nextButton.onclick = () => {
-    if (currentProblemIndex < totalProblems - 1) {
-        currentProblemIndex++;
-        displayProblem();
-    }
-};
+    // Initialize the first problem
+    displayProblem();
 
-// Initialize the first problem
-displayProblem();
-
-// Initialize animation system if it doesn't exist
-// This is needed because animations.js creates the animationSystem instance
-if (typeof animationSystem === 'undefined') {
-    class AnimationSystem {
-        constructor() {
-            this.starsContainer = document.getElementById('stars-container');
-        }
-    
-        // Create a star element with random properties
-        createStar() {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.textContent = '⭐';
-            star.style.left = Math.random() * window.innerWidth + 'px';
-            star.style.fontSize = `${Math.random() * 20 + 20}px`; // Random size between 20-40px
-            star.style.animationDuration = `${Math.random() * 1.5 + 0.5}s`; // Random duration between 0.5-2s
-            return star;
-        }
-    
-        // Handle correct answer animation
-        handleCorrectAnswer(selectedOption, allOptions, callback) {
-            // Disable all options
-            Array.from(allOptions).forEach(option => {
-                option.disabled = true;
-                option.onclick = null;
-            });
-    
-            // Add correct class to the selected option
-            selectedOption.classList.add('correct');
-    
-            // Create and animate stars
-            const numStars = 10; // Consistent number of stars for all problems
-            for (let i = 0; i < numStars; i++) {
-                const star = this.createStar();
-                this.starsContainer.appendChild(star);
-                setTimeout(() => {
-                    star.remove();
-                }, 2000);
-            }
-    
-            // Wait for animation to complete before moving to next problem
-            setTimeout(callback, 1000);
-        }
-    
-        // Handle wrong answer animation
-        handleWrongAnswer(option) {
-            option.classList.add('wrong');
-            setTimeout(() => option.classList.remove('wrong'), 500);
-        }
-    }
-    
-    // Create a global instance
-    window.animationSystem = new AnimationSystem();
-} 
+    // Removed the redundant AnimationSystem check/definition block
+}); 
