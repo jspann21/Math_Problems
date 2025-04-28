@@ -507,27 +507,25 @@ function formatTime(hour, minute) {
 
 // Adds or subtracts minutes from a given time, handling rollovers
 function calculateNewTime(hour, minute, minutesToAdd) {
-    let totalMinutes = hour * 60 + minute + minutesToAdd;
-    // Handle potential negative results if subtracting
-    const minutesInDay = 24 * 60;
-    totalMinutes = (totalMinutes % minutesInDay + minutesInDay) % minutesInDay; // Wrap around 24 hours
+    // Convert the initial 1-12 hour to 0-11 for easier calculation
+    let hour24 = (hour === 12) ? 0 : hour; 
 
-    let newHour = Math.floor(totalMinutes / 60);
+    let totalMinutes = hour24 * 60 + minute + minutesToAdd;
+    
+    // Keep total minutes within a 24-hour cycle (1440 minutes) but centered around a base day
+    // This handles negative minutes correctly by ensuring the modulo result is positive
+    totalMinutes = (totalMinutes % 1440 + 1440) % 1440; 
+
+    let newHour24 = Math.floor(totalMinutes / 60);
     let newMinute = totalMinutes % 60;
 
-    // Convert back to 12-hour format for display if needed (keeping 24h for calc is easier)
-    // For now, let's stick to the format used in examples (e.g., 1:35, potentially crossing 12 o'clock)
-    // We might need a more complex calculation if we strict 12h format with am/pm is needed
-    // Let's recalculate simply for display, assuming simple clock arithmetic
-    let displayHour = hour;
-    let displayMinute = minute + minutesToAdd;
+    // Convert back to 1-12 hour format for display
+    let displayHour = newHour24 % 12;
+    if (displayHour === 0) { // Handle midnight/noon case (0 hour in 24-format is 12 in 12-format)
+        displayHour = 12;
+    }
 
-    displayHour += Math.floor(displayMinute / 60);
-    displayMinute = (displayMinute % 60 + 60) % 60; // Ensure positive minutes 0-59
-
-    displayHour = ((displayHour - 1) % 12) + 1; // Keep hour in 1-12 range
-
-    return { hour: displayHour, minute: displayMinute };
+    return { hour: displayHour, minute: newMinute };
 }
 
 // Generates plausible wrong time options around the correct answer
