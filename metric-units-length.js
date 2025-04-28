@@ -1,3 +1,5 @@
+import { animationSystem } from './animations.js';
+
 // Scratchpad functionality
 class Scratchpad {
     constructor(canvas) {

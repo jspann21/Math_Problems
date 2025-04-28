@@ -1,3 +1,5 @@
+import { animationSystem } from './animations.js';
+
 // Problem generator functions
 function generateProblem() {
     // Names array to cycle through
