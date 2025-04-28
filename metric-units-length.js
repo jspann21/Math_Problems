@@ -426,11 +426,22 @@ clearBtn.onclick = () => scratchpad.clear();
 function handleOptionClick(option, index) {
     const problem = problems[currentProblem];
     
-    if (index === problem.correct) {
-        animationSystem.handleCorrectAnswer(option, optionsContainer.getElementsByClassName('option'), () => {
+    const correctIndex = problem.correct;
+    const isCorrect = index === correctIndex;
+    
+    // Use the animation system
+    const allOptions = optionsContainer.querySelectorAll('.option');
+    if (isCorrect) {
+        animationSystem.handleCorrectAnswer(option, allOptions, () => {
+            // Automatically load the next problem after the animation
             if (currentProblem < problems.length - 1) {
                 currentProblem++;
                 displayProblem();
+            } else {
+                 // Optional: Handle end of problems, maybe disable next? Or loop?
+                 // For now, just log or do nothing if already at the end.
+                 console.log("Reached end of problems.");
+                 // Consider disabling next button here if desired: nextButton.disabled = true;
             }
         });
     } else {

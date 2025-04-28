@@ -339,13 +339,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Prevent clicking after answer
         if(option.disabled) return;
 
-        if (selectedAnswer === currentProblem.answer) {
-            animationSystem.handleCorrectAnswer(option, optionsContainer.getElementsByClassName('option'), () => {
-                 // Don't auto-advance, let user click next
-                // if (currentProblemIndex < totalProblems - 1) {
-                //     currentProblemIndex++;
-                //     displayProblem();
-                // }
+        const correctIndex = currentProblem.options.indexOf(currentProblem.answer);
+        const isCorrect = index === correctIndex;
+        
+        const allOptions = optionsContainer.querySelectorAll('.option');
+        if (isCorrect) {
+            animationSystem.handleCorrectAnswer(option, allOptions, () => {
+                // Auto-proceed to the next problem using modulo logic
+                currentProblemIndex = (currentProblemIndex + 1) % totalProblems;
+                displayProblem(); 
             });
         } else {
             animationSystem.handleWrongAnswer(option);

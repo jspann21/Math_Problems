@@ -461,13 +461,19 @@ clearBtn.onclick = () => scratchpad.clear();
 
 // Event handlers
 function handleOptionClick(option, index) {
-    const selectedAnswer = parseInt(option.textContent);
+    const selectedAnswer = currentProblem.options[index];
+    const isCorrect = selectedAnswer === currentProblem.answer;
     
-    if (selectedAnswer === currentProblem.answer) {
-        animationSystem.handleCorrectAnswer(option, optionsContainer.getElementsByClassName('option'), () => {
+    const allOptions = optionsContainer.querySelectorAll('.option');
+    if (isCorrect) {
+        animationSystem.handleCorrectAnswer(option, allOptions, () => {
+            // Auto-proceed to the next problem
             if (currentProblemIndex < totalProblems - 1) {
                 currentProblemIndex++;
-                displayProblem();
+                displayProblem(); 
+            } else {
+                console.log("Reached end of problems.");
+                // Optionally disable next button or handle end state
             }
         });
     } else {
