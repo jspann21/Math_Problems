@@ -391,6 +391,9 @@ function handleClockNumberClick(selectedNumberElement, clickedNumber) {
              
              const clockFace = optionsContainer.querySelector('.clock-face');
              if(clockFace) clockFace.appendChild(minuteHand);
+             
+             // Automatically load the next problem
+             generateAndShowNewProblem();
         });
     } else {
         // Use handleWrongAnswer, just passing the clicked number element
@@ -427,7 +430,8 @@ function handleSimpleOptionClick(selectedOption) {
 
     if (isCorrect) {
         animationSystem.handleCorrectAnswer(selectedOption, elementsToDisable, () => {
-            // REMOVED: setTimeout(displayProblem, 1500); 
+            // Automatically load the next problem
+            generateAndShowNewProblem(); 
         });
     } else {
         animationSystem.handleWrongAnswer(selectedOption);
