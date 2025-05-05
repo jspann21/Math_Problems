@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition & Subtraction (0-20)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-content">
+        <div class="problem-area">
+            <div class="header-container">
+                <a href="index.html" class="home-button">🏠 Home</a>
+                <h1>🔢 Addition & Subtraction (0-20)</h1>
+                <button class="toggle-scratchpad" id="toggle-scratchpad">📝 Open Scratchpad</button>
+            </div>
+            <div class="container">
+                <div class="problem" id="problem-text">Loading problem...</div>
+                <div class="options" id="options-container">
+                    <!-- Options dynamically loaded -->
+                </div>
+                <div class="navigation">
+                    <button class="nav-button" id="prev-problem">← Previous</button>
+                    <button class="nav-button" id="next-problem">Next →</button>
+                </div>
+            </div>
+        </div>
+        <div class="scratchpad-area" id="scratchpad-area">
+            <div class="scratchpad-controls">
+                <button class="scratchpad-button" id="undo-btn">↩️ Undo</button>
+                <button class="scratchpad-button" id="redo-btn">↪️ Redo</button>
+                <button class="scratchpad-button clear" id="clear-btn">🗑️ Clear</button>
+                <button class="scratchpad-button" id="close-scratchpad">❌ Close</button>
+            </div>
+            <canvas class="scratchpad-canvas" id="scratchpad"></canvas>
+        </div>
+    </div>
+    <div class="problem-type">
+        Addition & Subtraction (0-20) Problems
+    </div>
+    <div class="stars" id="stars-container"></div>
+    <script src="animations.js" type="module" defer></script>
+    <script src="addition-subtraction-0-20.js" type="module" defer></script>
+</body>
+</html> 
