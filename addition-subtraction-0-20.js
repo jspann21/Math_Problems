@@ -308,6 +308,15 @@ function displayProblem(problemData) {
     currentProblemData = problemData;
 
     problemTextElement.textContent = currentProblemData.questionText;
+
+    // Explicitly clear styles/classes from old options before removing them
+    const oldOptions = optionsContainer.querySelectorAll('.option');
+    oldOptions.forEach(option => {
+        option.classList.remove('correct', 'wrong');
+        option.style.transform = 'none'; // Remove inline transform if any
+        option.disabled = false; // Re-enable just in case
+    });
+
     optionsContainer.innerHTML = ''; // Clear previous options
 
     currentProblemData.options.forEach((optionValue) => {
