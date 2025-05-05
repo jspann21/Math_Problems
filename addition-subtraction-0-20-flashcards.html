@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition & Subtraction Flashcards (0-20)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-content">
+        <div class="problem-area">
+            <div class="header-container">
+                <a href="index.html" class="home-button">🏠 Home</a>
+                <h1>⚡ Flashcards: Add & Subtract (0-20)</h1>
+                <div class="orientation-toggle">
+                    <span class="toggle-label horizontal active">Horizontal</span>
+                    <label class="switch">
+                        <input type="checkbox" id="orientation-switch">
+                    </label>
+                    <span class="toggle-label vertical">Vertical</span>
+                    <div class="slider-bg"></div>
+                </div>
+            </div>
+            <div class="container flashcard-page-container">
+                <div class="flashcard-container" id="flashcard-container">
+                    <div class="flashcard" id="flashcard">
+                        <div class="flashcard-front" id="flashcard-front">
+                            <span id="problem-text">Loading...</span>
+                        </div>
+                        <div class="flashcard-back" id="flashcard-back">
+                            <span id="answer-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flashcard-navigation">
+                    <button class="nav-button" id="flip-btn">Flip</button>
+                    <button class="nav-button" id="next-btn" style="display: none;">Next →</button>
+                </div>
+            </div>
+        </div>
+        <!-- No scratchpad area -->
+    </div>
+    <div class="problem-type">
+        Addition & Subtraction (0-20) Flashcards
+    </div>
+    <!-- Stars container might not be relevant here, but kept for consistency -->
+    <div class="stars" id="stars-container"></div>
+    <!-- animations.js included for potential future use or consistency -->
+    <script src="animations.js" type="module" defer></script>
+    <script src="addition-subtraction-0-20-flashcards.js" type="module" defer></script>
+</body>
+</html> 
