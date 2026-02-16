@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Clock Time (Tick Marks)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-content">
+        <div class="problem-area">
+            <div class="header-container">
+                <a href="index.html" class="home-button">🏠 Home</a>
+                <h1>⏱️ Read Clock Time (Tick Marks)</h1>
+                <button class="toggle-scratchpad" id="toggle-scratchpad">📝 Open Scratchpad</button>
+            </div>
+            <div class="container">
+                <div class="problem" id="problem-text"></div>
+                <div class="options" id="options-container"></div>
+                <div class="navigation">
+                    <button class="nav-button" id="prev-btn">← Previous</button>
+                    <button class="nav-button" id="next-btn">Next →</button>
+                </div>
+            </div>
+        </div>
+        <div class="scratchpad-area" id="scratchpad-area">
+            <div class="scratchpad-controls">
+                <button class="scratchpad-button" id="undo-btn">↩️ Undo</button>
+                <button class="scratchpad-button" id="redo-btn">↪️ Redo</button>
+                <button class="scratchpad-button clear" id="clear-btn">🗑️ Clear</button>
+                <button class="scratchpad-button" id="close-scratchpad">❌ Close</button>
+            </div>
+            <canvas class="scratchpad-canvas" id="scratchpad"></canvas>
+        </div>
+    </div>
+    <div class="problem-type">
+        Clock Reading Problems (Minute Tick Marks)
+    </div>
+    <div class="stars" id="stars-container"></div>
+    <script src="animations.js" type="module" defer></script>
+    <script src="time-read-clock-tickmarks.js" type="module" defer></script>
+</body>
+</html>
