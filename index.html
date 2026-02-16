@@ -4,71 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Problems Hub</title>
+    <meta name="description" content="Practice-friendly math pages with no ads and no subscriptions.">
     <link rel="stylesheet" href="styles.css">
 <script async src='https://www.googletagmanager.com/gtag/js?id=G-WYJB2Y877T'></script><script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-WYJB2Y877T');</script></head>
-<body>
-    <div class="container">
-        <h1>🎨 Fun Math Problems!</h1>
-        
-        <div class="topic-section">
-            <h2 class="topic-title">Customary Units of Length</h2>
-            <div class="problem-links">
-                <a href="customary-units-three-numbers.html" class="problem-link">
-                    📏 Using 3 One or Two Digit Numbers
-                </a>
-                <a href="customary-units-up-to-100.html" class="problem-link">
-                    📐 Units Up to 100
-                </a>
-                <a href="metric-units-length.html" class="problem-link">
-                    📊 Appropriate Metric Unit of Length
-                </a>
-            </div>
-        </div>
+<body class="home-page">
+    <main class="container home-container" aria-labelledby="home-title">
+        <header class="home-header">
+            <p class="home-kicker">Math Practice</p>
+            <h1 id="home-title">Fun Math Problems</h1>
+            <p class="home-subtitle">Pick a topic and start practicing instantly.</p>
+        </header>
 
-        <div class="topic-section">
-            <h2 class="topic-title">Word Problems</h2>
-            <div class="problem-links">
-                <a href="length-word-problems.html" class="problem-link">
-                    📝 Length Word Problems
-                </a>
-            </div>
-        </div>
+        <div id="topic-catalog" class="catalog-grid" aria-live="polite"></div>
 
-        <div class="topic-section">
-            <h2 class="topic-title">Basic Operations</h2>
-            <div class="problem-links">
-                 <a href="addition-subtraction-0-20.html" class="problem-link">
-                    <span class="new-badge">NEW!</span> 🔢 Addition & Subtraction (0-20)
-                </a>
-                <a href="addition-subtraction-0-20-flashcards.html" class="problem-link">
-                    <span class="new-badge">NEW!</span> ⚡ Flashcards: Add & Subtract (0-20)
-                </a>
-            </div>
-        </div>
+        <noscript>
+            <p class="noscript-note">Please enable JavaScript to view the problem catalog.</p>
+        </noscript>
+    </main>
 
-        <div class="topic-section">
-            <h2 class="topic-title">Time</h2>
-            <div class="problem-links">
-                <a href="time-problems.html" class="problem-link">
-                    ⏰ Telling Time Problems
-                </a>
-                <a href="time-read-clock-tickmarks.html" class="problem-link">
-                    ⏱️ Read Clock Time (Minute Tick Marks)
-                </a>
-            </div>
-        </div>
-
-        <div class="topic-section">
-            <h2 class="topic-title">More Topics Coming Soon!</h2>
-            <div class="problem-links">
-                <span class="problem-link coming-soon">
-                    📊 Fractions and Decimals
-                </span>
-                 <span class="problem-link coming-soon">
-                    📐 Geometry Basics
-                </span>
-            </div>
-        </div>
-    </div>
+    <script src="index.js" type="module" defer></script>
 </body>
-</html> 
+</html>

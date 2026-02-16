@@ -1,165 +1,5 @@
 import { animationSystem } from './animations.js';
-
-// Scratchpad functionality
-class Scratchpad {
-    constructor(canvas) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.isDrawing = false;
-        this.paths = [];
-        this.redoPaths = [];
-        this.currentPath = [];
-        
-        this.startDrawing = this.startDrawing.bind(this);
-        this.draw = this.draw.bind(this);
-        this.stopDrawing = this.stopDrawing.bind(this);
-        this.setCanvasSize = this.setCanvasSize.bind(this);
-        
-        this.setupEventListeners();
-        window.addEventListener('resize', this.setCanvasSize);
-    }
-
-    initialize() {
-        // Set canvas size
-        const rect = this.canvas.getBoundingClientRect();
-        this.canvas.width = rect.width;
-        this.canvas.height = 500;
-        
-        // Initial canvas setup
-        this.ctx = this.canvas.getContext('2d');
-        this.ctx.strokeStyle = '#000000';
-        this.ctx.lineWidth = 3;
-        this.ctx.lineCap = 'round';
-        this.ctx.lineJoin = 'round';
-    }
-
-    setCanvasSize() {
-        const rect = this.canvas.getBoundingClientRect();
-        this.canvas.width = rect.width;
-        this.canvas.height = 500;
-        
-        // Reset context properties after resize
-        this.ctx.strokeStyle = '#000000';
-        this.ctx.lineWidth = 3;
-        this.ctx.lineCap = 'round';
-        this.ctx.lineJoin = 'round';
-        
-        this.redraw();
-    }
-
-    setupEventListeners() {
-        // Mouse events
-        this.canvas.addEventListener('mousedown', this.startDrawing);
-        this.canvas.addEventListener('mousemove', this.draw);
-        this.canvas.addEventListener('mouseup', this.stopDrawing);
-        this.canvas.addEventListener('mouseleave', this.stopDrawing);
-
-        // Touch events
-        this.canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const rect = this.canvas.getBoundingClientRect();
-            this.startDrawing({
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-        });
-
-        this.canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            this.draw({
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-        });
-
-        this.canvas.addEventListener('touchend', this.stopDrawing);
-    }
-
-    getPoint(e) {
-        const rect = this.canvas.getBoundingClientRect();
-        return {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
-        };
-    }
-
-    startDrawing(e) {
-        this.isDrawing = true;
-        const point = this.getPoint(e);
-        this.currentPath = [point];
-        this.ctx.beginPath();
-        this.ctx.moveTo(point.x, point.y);
-    }
-
-    draw(e) {
-        if (!this.isDrawing) return;
-
-        const point = this.getPoint(e);
-        this.currentPath.push(point);
-        
-        this.ctx.lineTo(point.x, point.y);
-        this.ctx.stroke();
-    }
-
-    stopDrawing() {
-        if (!this.isDrawing) return;
-        this.isDrawing = false;
-        if (this.currentPath.length > 1) {
-            this.paths.push([...this.currentPath]);
-            this.redoPaths = [];
-        }
-        this.currentPath = [];
-    }
-
-    redraw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Reset context properties
-        this.ctx.strokeStyle = '#000000';
-        this.ctx.lineWidth = 3;
-        this.ctx.lineCap = 'round';
-        this.ctx.lineJoin = 'round';
-        
-        const drawPath = (path) => {
-            if (path.length < 2) return;
-            
-            this.ctx.beginPath();
-            this.ctx.moveTo(path[0].x, path[0].y);
-            
-            for (let i = 1; i < path.length; i++) {
-                this.ctx.lineTo(path[i].x, path[i].y);
-            }
-            
-            this.ctx.stroke();
-        };
-
-        // Draw all completed paths
-        this.paths.forEach(drawPath);
-    }
-
-    undo() {
-        if (this.paths.length > 0) {
-            this.redoPaths.push(this.paths.pop());
-            this.redraw();
-        }
-    }
-
-    redo() {
-        if (this.redoPaths.length > 0) {
-            this.paths.push(this.redoPaths.pop());
-            this.redraw();
-        }
-    }
-
-    clear() {
-        this.paths = [];
-        this.redoPaths = [];
-        this.currentPath = [];
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
+import { setupScratchpad, shuffleArray } from './shared.js';
 
 // Names for word problems
 const names = [
@@ -269,15 +109,6 @@ function generateProblem() {
     };
 }
 
-// Utility functions
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
 // Game state
 let currentProblem = null;
 let currentProblemIndex = 0;
@@ -296,46 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevButton = document.getElementById('prev-btn');
     const nextButton = document.getElementById('next-btn');
 
-    // Scratchpad elements
-    const scratchpadArea = document.getElementById('scratchpad-area');
-    const scratchpadCanvas = document.getElementById('scratchpad');
-    const toggleScratchpadBtn = document.getElementById('toggle-scratchpad');
-    const closeScratchpadBtn = document.getElementById('close-scratchpad');
-    const undoBtn = document.getElementById('undo-btn');
-    const redoBtn = document.getElementById('redo-btn');
-    const clearBtn = document.getElementById('clear-btn');
-
     // Generate all problems at start
     for (let i = 0; i < totalProblems; i++) {
         problems.push(generateProblem());
     }
 
-    // Initialize scratchpad
-    const scratchpad = new Scratchpad(scratchpadCanvas);
-    scratchpad.initialize(); // Initialize scratchpad dimensions and context
-
-    // Scratchpad control handlers
-    toggleScratchpadBtn.onclick = () => {
-        scratchpadArea.classList.toggle('open');
-        toggleScratchpadBtn.textContent = scratchpadArea.classList.contains('open') ? '❌ Close Scratchpad' : '📝 Open Scratchpad';
-        if (scratchpadArea.classList.contains('open')) {
-             scratchpad.setCanvasSize(); // Ensure canvas size is correct when opened
-        }
-    };
-
-    closeScratchpadBtn.onclick = () => {
-        scratchpadArea.classList.remove('open');
-        toggleScratchpadBtn.textContent = '📝 Open Scratchpad';
-    };
-
-    undoBtn.onclick = () => scratchpad.undo();
-    redoBtn.onclick = () => scratchpad.redo();
-    clearBtn.onclick = () => scratchpad.clear();
+    setupScratchpad();
 
     // Event handlers
     function handleOptionClick(option, index) {
-        const selectedAnswer = parseInt(option.textContent);
-        
         // Prevent clicking after answer
         if(option.disabled) return;
 
