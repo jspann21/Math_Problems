@@ -1,15 +1,42 @@
-/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap');
+
+:root {
+    --bg: #f4fbff;
+    --bg-accent: #e7f5ff;
+    --surface: #ffffff;
+    --surface-soft: #f8fbff;
+    --text: #103248;
+    --text-muted: #4b6476;
+    --primary: #0ea5a3;
+    --primary-strong: #0b7f7d;
+    --secondary: #1184dc;
+    --secondary-strong: #0d63a5;
+    --danger: #e24d4d;
+    --success: #16a34a;
+    --shadow: 0 14px 32px rgba(16, 50, 72, 0.14);
+    --radius: 18px;
+    --radius-sm: 10px;
+    --touch-target: 44px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Comic Sans MS', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;    background-color: #f0f9ff;
+    font-family: 'Nunito', 'Segoe UI', Tahoma, sans-serif;
+    background: radial-gradient(circle at 15% 15%, #ffffff, var(--bg-accent) 38%, var(--bg) 100%);
+    color: var(--text);
     margin: 0;
     padding: 20px;
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
 }
 
-/* Layout */
 .main-content {
     display: flex;
     gap: 20px;
@@ -22,6 +49,7 @@ body {
 
 .problem-area {
     flex: 1;
+    min-width: 0;
 }
 
 .container {
@@ -32,54 +60,67 @@ body {
     padding: 20px;
 }
 
-/* Header */
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 20px;
     padding: 0 20px;
     max-width: 1000px;
     margin: 0 auto 20px auto;
+    gap: 14px;
 }
 
 h1 {
     text-align: center;
     margin: 0 auto;
-    font-size: 32px;
+    font-size: clamp(1.7rem, 2.3vw, 2.2rem);
     flex-grow: 1;
     padding: 0 20px;
+    color: var(--text);
 }
 
-.home-button, .toggle-scratchpad {
+.home-button,
+.toggle-scratchpad,
+.nav-button,
+.scratchpad-button {
+    border: 0;
+    color: #ffffff;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    min-height: var(--touch-target);
+}
+
+.home-button,
+.toggle-scratchpad {
     padding: 12px 20px;
     font-size: 16px;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: var(--secondary);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    min-width: 120px;
+    min-width: 136px;
     justify-content: center;
 }
 
-.home-button:hover, .toggle-scratchpad:hover {
-    background-color: #1976D2;
+.home-button:hover,
+.toggle-scratchpad:hover {
+    background-color: var(--secondary-strong);
+    transform: translateY(-1px);
 }
 
-/* Problem Section */
 .problem {
-    font-size: 28px;
+    font-size: clamp(1.25rem, 2.2vw, 1.8rem);
     margin: 30px auto;
     padding: 30px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     max-width: 900px;
+    overflow-wrap: anywhere;
 }
 
 .options {
@@ -92,50 +133,54 @@ h1 {
 }
 
 .option {
-    padding: 25px;
-    font-size: 24px;
-    background-color: #4CAF50;
-    color: white;
+    padding: 22px;
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
+    background-color: var(--primary);
+    color: #ffffff;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease, filter 0.2s ease;
     width: 100%;
     text-align: center;
+    font-family: inherit;
+    font-weight: 700;
+    min-height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .option:hover {
-    transform: scale(1.05);
-    background-color: #45a049;
+    transform: translateY(-2px);
+    filter: brightness(0.95);
 }
 
 .option.wrong {
-    background-color: #ff4444;
+    background-color: var(--danger);
     animation: shake 0.5s;
 }
 
 .option.correct {
-    background-color: #4CAF50;
+    background-color: var(--success);
     animation: correct 0.5s;
 }
 
-/* Analog Clock Styles */
 .clock-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    /* height: 300px; Ensure options container has space */
 }
 
 .analog-clock {
     width: 250px;
     height: 250px;
-    border: 5px solid #333;
+    border: 5px solid #1f3342;
     border-radius: 50%;
     position: relative;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    background-color: var(--surface);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .clock-face {
@@ -150,7 +195,7 @@ h1 {
     left: 50%;
     width: 10px;
     height: 10px;
-    background-color: #333;
+    background-color: #1f3342;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
@@ -160,24 +205,24 @@ h1 {
     position: absolute;
     bottom: 50%;
     left: 50%;
-    background-color: #333;
+    background-color: #1f3342;
     transform-origin: bottom center;
     border-radius: 5px;
 }
 
 .hour-hand {
     width: 6px;
-    height: 30%; /* Shorter */
-    transform: translateX(-50%) rotate(0deg); /* Initial rotation */
+    height: 30%;
+    transform: translateX(-50%) rotate(0deg);
     z-index: 8;
 }
 
 .minute-hand {
     width: 4px;
-    height: 40%; /* Longer */
-    transform: translateX(-50%) rotate(0deg); /* Initial rotation */
+    height: 40%;
+    transform: translateX(-50%) rotate(0deg);
     z-index: 9;
-    background-color: #555; /* Slightly different color */
+    background-color: #3a5669;
 }
 
 .clock-number {
@@ -187,8 +232,8 @@ h1 {
     text-align: center;
     line-height: 30px;
     font-size: 18px;
-    font-weight: bold;
-    color: #444;
+    font-weight: 700;
+    color: #1f3342;
     cursor: pointer;
     user-select: none;
     border-radius: 50%;
@@ -196,24 +241,19 @@ h1 {
 }
 
 .clock-number:hover {
-    background-color: #eee;
+    background-color: #edf6ff;
 }
 
-.clock-number.selected {
-    background-color: #4CAF50; /* Highlight selected number */
-    color: white;
+.clock-number.selected,
+.clock-number.correct {
+    background-color: var(--success);
+    color: #ffffff;
 }
 
 .clock-number.wrong {
-    background-color: #ff4444; /* Use shake animation color */
-    color: white;
+    background-color: var(--danger);
+    color: #ffffff;
     animation: shake 0.5s;
-}
-
-.clock-number.correct {
-     background-color: #4CAF50; /* Use correct animation color */
-    color: white;
-    /* animation: correct 0.5s; */ /* Optional: can use pulse/highlight */
 }
 
 .clock-read-layout {
@@ -244,7 +284,7 @@ h1 {
     left: 50%;
     top: 6px;
     transform-origin: 50% 119px;
-    background-color: #333;
+    background-color: #1f3342;
     z-index: 2;
 }
 
@@ -258,7 +298,6 @@ h1 {
     height: 14px;
 }
 
-/* Navigation */
 .navigation {
     margin: 30px auto;
     text-align: center;
@@ -268,33 +307,30 @@ h1 {
 }
 
 .nav-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 14px 26px;
+    font-size: 17px;
+    background-color: var(--secondary);
     min-width: 150px;
 }
 
 .nav-button:hover {
-    background-color: #1976D2;
+    background-color: var(--secondary-strong);
+    transform: translateY(-1px);
 }
 
 .nav-button:disabled {
-    background-color: #cccccc;
+    background-color: #c2ced6;
     cursor: not-allowed;
+    transform: none;
 }
 
-/* Scratchpad */
 .scratchpad-area {
     display: none;
-    width: 350px;
+    width: min(350px, 100%);
     min-height: 550px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     padding: 10px;
 }
 
@@ -307,61 +343,60 @@ h1 {
     gap: 10px;
     margin-bottom: 10px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .scratchpad-button {
     padding: 8px 15px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    font-size: 15px;
+    background-color: var(--primary);
     display: flex;
     align-items: center;
     gap: 5px;
+    min-height: var(--touch-target);
 }
 
 .scratchpad-button:hover {
-    background-color: #45a049;
+    background-color: var(--primary-strong);
+    transform: translateY(-1px);
 }
 
 .scratchpad-button.clear {
-    background-color: #ff4444;
+    background-color: var(--danger);
 }
 
 .scratchpad-button.clear:hover {
-    background-color: #ff3333;
+    background-color: #be2f2f;
 }
 
 .scratchpad-canvas {
     width: 100%;
     height: 500px !important;
     min-height: 500px;
-    border: 2px solid #ddd;
+    border: 2px solid #d7e4ee;
     border-radius: 8px;
     touch-action: none;
     cursor: crosshair;
-    background-color: #fff;
+    background-color: #ffffff;
     display: block;
 }
 
-/* Problem Type Footer */
 .problem-type {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
     padding: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
     font-size: 14px;
-    color: #666;
+    color: var(--text-muted);
     text-align: center;
-    border-top: 2px solid #4CAF50;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    border-top: 2px solid var(--primary);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* Stars Animation */
 .stars {
     position: fixed;
     width: 100%;
@@ -372,12 +407,11 @@ h1 {
 
 .star {
     position: absolute;
-    color: gold;
+    color: #f59e0b;
     font-size: 30px;
     animation: star-fall 1s ease-out forwards;
 }
 
-/* Confetti Animation */
 .confetti {
     position: absolute;
     width: 10px;
@@ -385,30 +419,26 @@ h1 {
     animation: confetti-fall 3s ease-out forwards;
 }
 
-/* Hearts Animation */
 .heart {
     position: absolute;
-    color: #ff4444;
+    color: var(--danger);
     font-size: 24px;
     animation: heart-float 2s ease-out forwards;
 }
 
-/* Sparkles Animation */
 .sparkle {
     position: absolute;
-    color: gold;
+    color: #facc15;
     font-size: 20px;
     animation: sparkle-spin 1.5s ease-out forwards;
 }
 
-/* Balloons Animation */
 .balloon {
     position: absolute;
     font-size: 40px;
     animation: balloon-float 4s ease-out forwards;
 }
 
-/* Animations */
 @keyframes star-fall {
     0% {
         transform: translateY(-50px) rotate(0deg);
@@ -491,124 +521,174 @@ h1 {
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    75% {
+        transform: translateX(10px);
+    }
 }
 
 @keyframes correct {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
-/* Index Page Specific Styles */
+.home-page {
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+    background:
+        radial-gradient(circle at 10% 15%, rgba(14, 165, 163, 0.22), transparent 26%),
+        radial-gradient(circle at 85% 12%, rgba(17, 132, 220, 0.18), transparent 24%),
+        radial-gradient(circle at 80% 85%, rgba(250, 204, 21, 0.18), transparent 28%),
+        linear-gradient(180deg, #f9fdff 0%, #eef8ff 50%, #f4fbff 100%);
+}
+
+.home-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.38;
+    background-image:
+        linear-gradient(rgba(17, 132, 220, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17, 132, 220, 0.1) 1px, transparent 1px);
+    background-size: 36px 36px;
+}
+
+.home-container {
+    max-width: 1100px;
+    padding-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.home-header {
+    margin: 0 auto 30px auto;
+    max-width: 760px;
+    text-align: center;
+}
+
+.home-kicker {
+    margin: 0 0 6px 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-weight: 800;
+}
+
+.home-subtitle {
+    color: var(--text-muted);
+    margin: 10px auto 0 auto;
+    font-size: 1.05rem;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
 .topic-section {
-    background-color: white;
-    border-radius: 15px;
+    background-color: var(--surface);
+    border-radius: var(--radius);
     padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    box-shadow: var(--shadow);
 }
 
 .topic-title {
-    color: #4CAF50;
-    font-size: 1.5em;
-    margin-bottom: 20px;
+    color: var(--primary-strong);
+    font-size: 1.3rem;
+    margin: 0 0 16px 0;
 }
 
 .problem-links {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .problem-link {
-    display: block;
-    padding: 15px 20px;
-    background-color: #4CAF50;
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background-color: var(--primary);
+    color: #ffffff;
     text-decoration: none;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    font-size: 1.2em;
+    border-radius: 12px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    font-size: 1.05rem;
+    font-weight: 700;
+    min-height: var(--touch-target);
 }
 
 .problem-link:hover {
-    transform: scale(1.02);
-    background-color: #45a049;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+    filter: brightness(0.96);
+}
+
+.problem-icon {
+    display: inline-flex;
+    min-width: 1.4rem;
 }
 
 .coming-soon {
-    color: #aaa;
+    background-color: #dce7ee;
+    color: #688093;
     cursor: default;
 }
 
+.coming-soon:hover {
+    transform: none;
+    filter: none;
+}
+
 .new-badge {
-    color: #e74c3c; /* A noticeable red */
-    font-weight: bold;
-    font-size: 0.8em; /* Smaller than link text */
-    margin-left: 4px; /* Space from icon */
-    vertical-align: baseline; /* Align with text baseline */
-    background-color: #fdfd96; /* Light yellow background */
-    padding: 1px 3px;
-    border-radius: 3px;
+    margin-left: auto;
+    color: #8a2000;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background-color: #ffe07a;
+    padding: 2px 8px;
+    border-radius: 999px;
 }
 
-.emoji {
-    font-size: 1.5em;
-    margin-right: 10px;
+.noscript-note {
+    text-align: center;
+    color: var(--text-muted);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .main-content {
-        flex-direction: column;
-    }
-
-    .scratchpad-area {
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .options {
-        grid-template-columns: 1fr;
-    }
-
-    .header-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    .problem {
-        font-size: 24px;
-        padding: 20px;
-    }
-
-    .option {
-        font-size: 20px;
-        padding: 15px;
-    }
-}
-
-/* == Flashcard Specific Styles == */
 .flashcard-page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 300px; /* Ensure space for the card */
+    min-height: 300px;
 }
 
 .flashcard-container {
-    perspective: 1000px; /* For 3D flip effect */
-    width: 350px; /* Increased width */
-    height: 200px; /* Increased height */
+    perspective: 1000px;
+    width: min(350px, 92vw);
+    height: 200px;
     margin-bottom: 20px;
 }
 
@@ -618,7 +698,7 @@ h1 {
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.6s;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow);
     border-radius: 10px;
 }
 
@@ -631,26 +711,25 @@ h1 {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Hide the back side during flip */
+    backface-visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5em; /* Increased base font size */
-    font-weight: bold;
+    font-size: clamp(1.9rem, 7vw, 2.5rem);
+    font-weight: 700;
     border-radius: 10px;
     padding: 15px;
-    box-sizing: border-box;
     text-align: center;
 }
 
 .flashcard-front {
-    background-color: #e0f2ff; /* Slightly darker light blue than body */
-    color: #333;
+    background-color: #f0faff;
+    color: #1f3342;
 }
 
 .flashcard-back {
-    background-color: #d1eaff; /* Slightly darker blue */
-    color: #0056b3;
+    background-color: #ddf0ff;
+    color: #0d63a5;
     transform: rotateY(-180deg);
 }
 
@@ -658,35 +737,32 @@ h1 {
     margin-top: 15px;
 }
 
-/* Adjust button styles if needed, but trying to reuse nav-button */
 .flashcard-navigation .nav-button {
     padding: 10px 20px;
     font-size: 1em;
-    width: 100px; /* Changed from min-width for fixed size */
-    text-align: center; /* Ensure text is centered */
+    width: 100px;
+    text-align: center;
 }
 
-/* Ensure container in problem area doesn't override flex */
 .problem-area > .container.flashcard-page-container {
-    display: flex; /* Re-assert flex */
+    display: flex;
 }
 
-/* == Toggle Switch Styles == */
 .orientation-toggle {
     display: flex;
     align-items: center;
     gap: 0;
-    background-color: #e6e6e6;
+    background-color: #deecf7;
     border-radius: 30px;
     padding: 3px;
     position: relative;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .toggle-label {
     font-size: 14px;
-    font-weight: 500;
-    color: #555;
+    font-weight: 700;
+    color: #34607d;
     padding: 6px 12px;
     border-radius: 25px;
     cursor: pointer;
@@ -695,7 +771,6 @@ h1 {
     transition: color 0.3s ease;
 }
 
-/* Hide the default checkbox */
 .switch {
     position: absolute;
     opacity: 0;
@@ -703,17 +778,15 @@ h1 {
     width: 0;
 }
 
-/* Style for the active state */
 .toggle-label.active {
-    color: #fff;
+    color: #ffffff;
 }
 
-/* The slider background that moves */
 .slider-bg {
     position: absolute;
     height: calc(100% - 6px);
     width: 50%;
-    background-color: #2196F3;
+    background-color: var(--secondary);
     border-radius: 25px;
     transition: transform 0.3s ease;
     z-index: 0;
@@ -725,7 +798,6 @@ h1 {
     transform: translateX(100%);
 }
 
-/* Remove old slider styles */
 .slider,
 .slider:before,
 input:checked + .slider,
@@ -736,52 +808,223 @@ input:checked + .slider:before,
     display: none;
 }
 
-/* == Vertical Flashcard Styles == */
-.flashcard.vertical {
-    /* No rotation needed just by adding the class */
-}
-
 .flashcard-container.vertical {
-    width: 200px; /* Increased width (was 150) */
-    height: 350px; /* Increased height (was 250) */
+    width: min(200px, 64vw);
+    height: 350px;
 }
 
 .flashcard.vertical .flashcard-front,
 .flashcard.vertical .flashcard-back {
-    /* Arrange content vertically */
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
-    line-height: 1.2; /* Adjust line height for multi-line */
+    line-height: 1.2;
 }
 
-/* Style for the vertically formatted problem text */
 .flashcard.vertical .flashcard-front span {
-    /* Remove previous general span styling for vertical */
-    width: auto; /* Let content determine width initially */
+    width: auto;
     padding-right: 0;
 }
 
 .flashcard.vertical .flashcard-front .num-line {
-    display: block; /* Each number/op on its own line */
+    display: block;
     text-align: right;
-    /* Set a fixed width based on characters (e.g., operator + space + 2 digits) */
-    /* Adjust '4ch' or '5ch' as needed based on visual result */
-    width: 5ch; 
-    margin: 0 auto; /* Center the fixed-width block */
-    padding: 0; /* Remove previous padding */
-    box-sizing: border-box;
-    line-height: 1.3; /* Adjust line spacing */
+    width: 5ch;
+    margin: 0 auto;
+    padding: 0;
+    line-height: 1.3;
 }
 
 .flashcard.vertical .flashcard-front .op-line {
-    display: block; /* Ensure it takes its own line */
-    border-bottom: 2px solid #333;
-    margin: 2px auto 5px auto; /* Adjust spacing around line */
-    width: 5ch; /* Match number line width */
+    display: block;
+    border-bottom: 2px solid #1f3342;
+    margin: 2px auto 5px auto;
+    width: 5ch;
 }
 
-/* Keep back centered */
 .flashcard.vertical .flashcard-back span {
     text-align: center;
-} 
+}
+
+@media (max-width: 900px) {
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    body {
+        padding: 16px;
+        padding-bottom: calc(92px + env(safe-area-inset-bottom));
+    }
+
+    .main-content {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 72px;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    h1 {
+        padding: 0;
+    }
+
+    .home-button,
+    .toggle-scratchpad {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .orientation-toggle {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+        justify-content: center;
+    }
+
+    .container {
+        padding: 14px;
+    }
+
+    .problem {
+        margin: 20px auto;
+        padding: 22px;
+    }
+
+    .options {
+        gap: 14px;
+        padding: 0 8px;
+    }
+
+    .navigation {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .scratchpad-area {
+        width: 100%;
+        min-height: auto;
+        margin-top: 8px;
+    }
+
+    .scratchpad-canvas {
+        height: 420px !important;
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 14px;
+        padding-bottom: calc(90px + env(safe-area-inset-bottom));
+    }
+
+    .main-content {
+        margin-bottom: 68px;
+    }
+
+    .scratchpad-area {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .options {
+        grid-template-columns: 1fr;
+    }
+
+    .header-container {
+        padding: 0 8px;
+    }
+
+    h1 {
+        font-size: 24px;
+        padding: 0;
+    }
+
+    .problem {
+        padding: 20px;
+    }
+
+    .option {
+        padding: 15px;
+        min-height: var(--touch-target);
+    }
+
+    .navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .home-button,
+    .toggle-scratchpad,
+    .scratchpad-button {
+        width: 100%;
+    }
+
+    .scratchpad-controls {
+        justify-content: stretch;
+    }
+
+    .home-page::before {
+        background-size: 28px 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        padding-bottom: calc(88px + env(safe-area-inset-bottom));
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .problem {
+        margin: 16px auto;
+        padding: 16px;
+        font-size: 1.1rem;
+    }
+
+    .options {
+        margin: 20px auto;
+        gap: 10px;
+        padding: 0;
+    }
+
+    .scratchpad-canvas {
+        height: 340px !important;
+        min-height: 340px;
+    }
+
+    .scratchpad-button {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .flashcard-container {
+        width: min(320px, 100%);
+        height: 180px;
+    }
+
+    .flashcard-container.vertical {
+        width: min(170px, 70vw);
+        height: 300px;
+    }
+
+    .problem-type {
+        font-size: 12px;
+    }
+}
