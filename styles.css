@@ -216,6 +216,48 @@ h1 {
     /* animation: correct 0.5s; */ /* Optional: can use pulse/highlight */
 }
 
+.clock-read-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 900px;
+}
+
+.clock-read-options {
+    width: 100%;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.clock-number-static {
+    cursor: default;
+}
+
+.clock-number-static:hover {
+    background-color: transparent;
+}
+
+.clock-tick {
+    position: absolute;
+    left: 50%;
+    top: 6px;
+    transform-origin: 50% 119px;
+    background-color: #333;
+    z-index: 2;
+}
+
+.minute-tick {
+    width: 2px;
+    height: 8px;
+}
+
+.hour-tick {
+    width: 3px;
+    height: 14px;
+}
+
 /* Navigation */
 .navigation {
     margin: 30px auto;
