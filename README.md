@@ -14,7 +14,7 @@ Visit the live site and pick a topic from the homepage. Each problem page shows 
 
 - **Customary Units of Length:** Using 3 One or Two Digit Numbers, Units Up to 100, Appropriate Metric Unit of Length
 - **Word Problems:** Length Word Problems
-- **Basic Operations:** Addition & Subtraction (0–20), Flashcards: Add & Subtract (0–20)
+- **Basic Operations:** Addition & Subtraction (0–20), Flashcards: Add & Subtract (0–20), Multiplication (0–10)
 - **Time:** Telling Time Problems, Read Clock Time (Minute Tick Marks)
 
 ## Current Stack
