@@ -439,6 +439,15 @@ h1 {
     animation: balloon-float 4s ease-out forwards;
 }
 
+.firework-spark {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
+    animation: firework-burst 0.9s ease-out forwards;
+}
+
 @keyframes star-fall {
     0% {
         transform: translateY(-50px) rotate(0deg);
@@ -516,6 +525,17 @@ h1 {
     }
     100% {
         transform: translateY(-100vh) translateX(0);
+        opacity: 0;
+    }
+}
+
+@keyframes firework-burst {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx, 0), var(--dy, 0)) scale(0.2);
         opacity: 0;
     }
 }

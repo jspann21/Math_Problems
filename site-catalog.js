@@ -42,6 +42,11 @@ export const topicCatalog = [
         href: 'addition-subtraction-0-20-flashcards.html',
         icon: '⚡',
       },
+      {
+        label: 'Multiplication (0-10)',
+        href: 'multiplication-0-10.html',
+        icon: '✖️',
+      },
     ],
   },
   {
