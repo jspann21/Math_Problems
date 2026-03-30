@@ -50,6 +50,35 @@ export const topicCatalog = [
     ],
   },
   {
+    title: 'Area & Perimeter',
+    problems: [
+      {
+        label: 'Count Area with Unit Squares',
+        href: 'area-count-unit-squares.html',
+        icon: '🟨',
+        badge: 'New',
+      },
+      {
+        label: 'Rectangle Area & Perimeter',
+        href: 'rectangle-area-perimeter.html',
+        icon: '📦',
+        badge: 'New',
+      },
+      {
+        label: 'Composite Figure Area',
+        href: 'composite-figure-area.html',
+        icon: '🧩',
+        badge: 'New',
+      },
+      {
+        label: 'Perimeter on Grid Shapes',
+        href: 'perimeter-grid-shapes.html',
+        icon: '🔲',
+        badge: 'New',
+      },
+    ],
+  },
+  {
     title: 'Time',
     problems: [
       {
@@ -61,7 +90,6 @@ export const topicCatalog = [
         label: 'Read Clock Time (Minute Tick Marks)',
         href: 'time-read-clock-tickmarks.html',
         icon: '⏱️',
-        badge: 'New',
       },
     ],
   },

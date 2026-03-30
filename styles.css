@@ -166,6 +166,75 @@ h1 {
     animation: correct 0.5s;
 }
 
+.visual-problem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.problem-question {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.diagram-panel {
+    width: min(100%, 620px);
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f0faff 100%);
+    border: 2px solid #d6eaf4;
+}
+
+.shape-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.diagram-caption {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.98rem;
+}
+
+.grid-outline {
+    fill: none;
+    stroke: #d7e5ee;
+    stroke-width: 1.5;
+}
+
+.shape-cell {
+    fill: #facc15;
+    stroke: #b7791f;
+    stroke-width: 2;
+}
+
+.rectangle-fill {
+    fill: #fb923c;
+    stroke: #c2410c;
+    stroke-width: 3;
+}
+
+.composite-fill {
+    fill: #facc15;
+    stroke: #a16207;
+    stroke-width: 3;
+}
+
+.dimension-line,
+.dimension-cap {
+    stroke: #35556a;
+    stroke-width: 2;
+}
+
+.dimension-text {
+    fill: #103248;
+    font-family: 'Nunito', 'Segoe UI', Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+}
+
 .clock-container {
     display: flex;
     justify-content: center;
@@ -970,6 +1039,10 @@ input:checked + .slider:before,
 
     .problem {
         padding: 20px;
+    }
+
+    .diagram-panel {
+        padding: 12px;
     }
 
     .option {
