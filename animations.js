@@ -9,7 +9,7 @@ class AnimationSystem {
             this.launchBalloons.bind(this),
             this.launchFireworks.bind(this),
         ];
-        this.confettiColors = ['#22c55e', '#14b8a6', '#3b82f6', '#f59e0b', '#f97316', '#ec4899'];
+        this.confettiColors = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
     }
 
     getStarsContainer() {
@@ -41,82 +41,46 @@ class AnimationSystem {
         return particle;
     }
 
-    getOriginMetrics(element) {
-        if (!element?.getBoundingClientRect) {
-            return {
-                x: this.viewportWidth() / 2,
-                y: this.viewportHeight() * 0.45,
-                width: 120,
-                height: 56,
-            };
-        }
-
-        const rect = element.getBoundingClientRect();
-        return {
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2,
-            width: rect.width,
-            height: rect.height,
-        };
-    }
-
-    setParticleOrigin(particle, origin, spreadX = 0.28, spreadY = 0.2) {
-        particle.style.left = `${origin.x + this.randomBetween(-origin.width * spreadX, origin.width * spreadX)}px`;
-        particle.style.top = `${origin.y + this.randomBetween(-origin.height * spreadY, origin.height * spreadY)}px`;
-    }
-
-    createStar(origin) {
+    createStar() {
         const star = this.createParticle('star', '⭐');
-        this.setParticleOrigin(star, origin);
-        star.style.fontSize = `${this.randomBetween(18, 28)}px`;
-        star.style.setProperty('--dx', `${this.randomBetween(-90, 90)}px`);
-        star.style.setProperty('--dy', `${this.randomBetween(-120, -48)}px`);
-        star.style.setProperty('--twirl', `${this.randomBetween(-180, 180)}deg`);
-        star.style.animationDuration = `${this.randomBetween(0.65, 0.95)}s`;
+        star.style.left = `${Math.random() * this.viewportWidth()}px`;
+        star.style.fontSize = `${this.randomBetween(20, 40)}px`;
+        star.style.animationDuration = `${this.randomBetween(0.7, 1.8)}s`;
         return star;
     }
 
-    createConfetti(origin) {
+    createConfetti() {
         const confetti = this.createParticle('confetti');
-        const color = this.pickRandom(this.confettiColors);
-        this.setParticleOrigin(confetti, origin, 0.2, 0.15);
-        confetti.style.background = `linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, ${color} 28%, ${color} 100%)`;
-        confetti.style.width = `${this.randomBetween(7, 12)}px`;
-        confetti.style.height = `${this.randomBetween(12, 18)}px`;
-        confetti.style.borderRadius = `${this.randomBetween(3, 6)}px`;
-        confetti.style.setProperty('--dx', `${this.randomBetween(-140, 140)}px`);
-        confetti.style.setProperty('--dy', `${this.randomBetween(-90, -24)}px`);
-        confetti.style.setProperty('--fall', `${this.randomBetween(70, 150)}px`);
-        confetti.style.setProperty('--twirl', `${this.randomBetween(-320, 320)}deg`);
-        confetti.style.animationDuration = `${this.randomBetween(0.75, 1.05)}s`;
+        confetti.style.left = `${Math.random() * this.viewportWidth()}px`;
+        confetti.style.top = '-20px';
+        confetti.style.backgroundColor = this.pickRandom(this.confettiColors);
+        confetti.style.width = `${this.randomBetween(8, 14)}px`;
+        confetti.style.height = `${this.randomBetween(14, 24)}px`;
+        confetti.style.animationDuration = `${this.randomBetween(2.2, 3.5)}s`;
         return confetti;
     }
 
-    createHeart(origin) {
+    createHeart() {
         const heart = this.createParticle('heart', this.pickRandom(['💙', '💚', '💛', '💖']));
-        this.setParticleOrigin(heart, origin, 0.15, 0.12);
-        heart.style.setProperty('--dx', `${this.randomBetween(-60, 60)}px`);
-        heart.style.setProperty('--dy', `${this.randomBetween(-165, -95)}px`);
-        heart.style.animationDuration = `${this.randomBetween(0.9, 1.15)}s`;
+        heart.style.left = `${Math.random() * this.viewportWidth()}px`;
+        heart.style.top = `${this.randomBetween(this.viewportHeight() * 0.65, this.viewportHeight() * 0.9)}px`;
+        heart.style.animationDuration = `${this.randomBetween(1.8, 2.4)}s`;
         return heart;
     }
 
-    createSparkle(origin) {
+    createSparkle() {
         const sparkle = this.createParticle('sparkle', this.pickRandom(['✨', '✦', '✧']));
-        this.setParticleOrigin(sparkle, origin, 0.22, 0.18);
-        sparkle.style.setProperty('--dx', `${this.randomBetween(-80, 80)}px`);
-        sparkle.style.setProperty('--dy', `${this.randomBetween(-95, -35)}px`);
-        sparkle.style.setProperty('--twirl', `${this.randomBetween(-120, 120)}deg`);
-        sparkle.style.animationDuration = `${this.randomBetween(0.55, 0.85)}s`;
+        sparkle.style.left = `${Math.random() * this.viewportWidth()}px`;
+        sparkle.style.top = `${this.randomBetween(this.viewportHeight() * 0.2, this.viewportHeight() * 0.75)}px`;
+        sparkle.style.animationDuration = `${this.randomBetween(1.0, 1.8)}s`;
         return sparkle;
     }
 
-    createBalloon(origin) {
+    createBalloon() {
         const balloon = this.createParticle('balloon', this.pickRandom(['🎈', '🎈', '🎈', '🎉']));
-        this.setParticleOrigin(balloon, origin, 0.18, 0.12);
-        balloon.style.setProperty('--dx', `${this.randomBetween(-40, 40)}px`);
-        balloon.style.setProperty('--dy', `${this.randomBetween(-190, -120)}px`);
-        balloon.style.animationDuration = `${this.randomBetween(0.95, 1.2)}s`;
+        balloon.style.left = `${Math.random() * this.viewportWidth()}px`;
+        balloon.style.top = `${this.viewportHeight() + this.randomBetween(10, 120)}px`;
+        balloon.style.animationDuration = `${this.randomBetween(3.5, 4.8)}s`;
         return balloon;
     }
 
@@ -136,54 +100,54 @@ class AnimationSystem {
         setTimeout(() => particle.remove(), removeAfterMs);
     }
 
-    launchStars(container, origin) {
-        for (let index = 0; index < 8; index += 1) {
-            this.appendAndCleanup(container, this.createStar(origin), 1200);
+    launchStars(container) {
+        for (let index = 0; index < 10; index += 1) {
+            this.appendAndCleanup(container, this.createStar(), 2200);
         }
     }
 
-    launchConfetti(container, origin) {
-        for (let index = 0; index < 18; index += 1) {
-            this.appendAndCleanup(container, this.createConfetti(origin), 1400);
+    launchConfetti(container) {
+        for (let index = 0; index < 24; index += 1) {
+            this.appendAndCleanup(container, this.createConfetti(), 3800);
         }
     }
 
-    launchHearts(container, origin) {
-        for (let index = 0; index < 8; index += 1) {
-            this.appendAndCleanup(container, this.createHeart(origin), 1400);
-        }
-    }
-
-    launchSparkles(container, origin) {
+    launchHearts(container) {
         for (let index = 0; index < 12; index += 1) {
-            this.appendAndCleanup(container, this.createSparkle(origin), 1000);
+            this.appendAndCleanup(container, this.createHeart(), 2600);
         }
     }
 
-    launchBalloons(container, origin) {
-        for (let index = 0; index < 5; index += 1) {
-            this.appendAndCleanup(container, this.createBalloon(origin), 1500);
+    launchSparkles(container) {
+        for (let index = 0; index < 16; index += 1) {
+            this.appendAndCleanup(container, this.createSparkle(), 2200);
         }
     }
 
-    launchFireworks(container, origin) {
-        const burstCount = 2;
-        const sparksPerBurst = 9;
+    launchBalloons(container) {
+        for (let index = 0; index < 8; index += 1) {
+            this.appendAndCleanup(container, this.createBalloon(), 5200);
+        }
+    }
+
+    launchFireworks(container) {
+        const burstCount = 3;
+        const sparksPerBurst = 10;
 
         for (let burstIndex = 0; burstIndex < burstCount; burstIndex += 1) {
-            const delay = burstIndex * 90;
+            const delay = burstIndex * 120;
             setTimeout(() => {
-                const originX = origin.x + this.randomBetween(-origin.width * 0.15, origin.width * 0.15);
-                const originY = origin.y + this.randomBetween(-origin.height * 0.2, origin.height * 0.1);
+                const originX = this.randomBetween(this.viewportWidth() * 0.15, this.viewportWidth() * 0.85);
+                const originY = this.randomBetween(this.viewportHeight() * 0.2, this.viewportHeight() * 0.55);
 
                 for (let sparkIndex = 0; sparkIndex < sparksPerBurst; sparkIndex += 1) {
                     const baseAngle = (Math.PI * 2 * sparkIndex) / sparksPerBurst;
                     const angle = baseAngle + this.randomBetween(-0.18, 0.18);
-                    const distance = this.randomBetween(38, 88);
+                    const distance = this.randomBetween(45, 110);
                     this.appendAndCleanup(
                         container,
                         this.createFireworkSpark(originX, originY, angle, distance),
-                        1000
+                        1300
                     );
                 }
             }, delay);
@@ -201,13 +165,12 @@ class AnimationSystem {
         if (!this.prefersReducedMotion) {
             const starsContainer = this.getStarsContainer();
             if (starsContainer && this.celebrationEffects.length) {
-                const origin = this.getOriginMetrics(selectedOption);
                 const effect = this.pickRandom(this.celebrationEffects);
-                effect(starsContainer, origin);
+                effect(starsContainer);
             }
         }
 
-        setTimeout(() => callback?.(), this.prefersReducedMotion ? 250 : 1000);
+        setTimeout(callback, this.prefersReducedMotion ? 250 : 1000);
     }
 
     handleWrongAnswer(option) {
