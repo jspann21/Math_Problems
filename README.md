@@ -16,6 +16,7 @@ Visit the live site and pick a topic from the homepage. Each problem page shows 
 - **Word Problems:** Length Word Problems
 - **Basic Operations:** Addition & Subtraction (0–20), Flashcards: Add & Subtract (0–20), Multiplication (0–10)
 - **Area & Perimeter:** Count Area with Unit Squares, Rectangle Area & Perimeter, Composite Figure Area, Perimeter on Grid Shapes
+- **Fractions:** Fraction Models & Groups, Make One Whole & Greater Than One, Compare & Equivalent Fractions, Order Fractions, Fractions on Number Lines, Fraction Word Problems
 - **Time:** Telling Time Problems, Read Clock Time (Minute Tick Marks)
 
 ## Current Stack
