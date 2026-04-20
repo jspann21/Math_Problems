@@ -79,6 +79,47 @@ export const topicCatalog = [
     ],
   },
   {
+    title: 'Fractions',
+    problems: [
+      {
+        label: 'Fraction Models & Groups',
+        href: 'fractions-practice.html?type=models',
+        icon: '◔',
+        badge: 'New',
+      },
+      {
+        label: 'Make One Whole & Greater Than One',
+        href: 'fractions-practice.html?type=whole',
+        icon: '1⁄2',
+        badge: 'New',
+      },
+      {
+        label: 'Compare & Equivalent Fractions',
+        href: 'fractions-practice.html?type=compare',
+        icon: '≷',
+        badge: 'New',
+      },
+      {
+        label: 'Order Fractions',
+        href: 'fractions-practice.html?type=order',
+        icon: '↕',
+        badge: 'New',
+      },
+      {
+        label: 'Fractions on Number Lines',
+        href: 'fractions-practice.html?type=numberlines',
+        icon: '—',
+        badge: 'New',
+      },
+      {
+        label: 'Fraction Word Problems',
+        href: 'fractions-practice.html?type=word',
+        icon: '📝',
+        badge: 'New',
+      },
+    ],
+  },
+  {
     title: 'Time',
     problems: [
       {
@@ -96,11 +137,6 @@ export const topicCatalog = [
   {
     title: 'More Topics Coming Soon',
     problems: [
-      {
-        label: 'Fractions and Decimals',
-        icon: '📊',
-        soon: true,
-      },
       {
         label: 'Geometry Basics',
         icon: '📐',
