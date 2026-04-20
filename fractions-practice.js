@@ -170,8 +170,20 @@ function renderCup(isEmpty) {
 }
 
 function renderObjectSet(total, emptyCount) {
-  const cups = [];
+  const filledCount = total - emptyCount;
+  const fractionReduces = gcd(emptyCount, total) > 1;
 
+  if (fractionReduces && filledCount > 0 && emptyCount > 0) {
+    const filledStart = randomInt(0, total - filledCount);
+    const cups = [];
+    for (let index = 0; index < total; index += 1) {
+      const isFilled = index >= filledStart && index < filledStart + filledCount;
+      cups.push(renderCup(!isFilled));
+    }
+    return `<div class="object-set">${cups.join('')}</div>`;
+  }
+
+  const cups = [];
   for (let index = 0; index < total; index += 1) {
     cups.push(renderCup(index < emptyCount));
   }

@@ -156,6 +156,7 @@ class AnimationSystem {
 
     handleCorrectAnswer(selectedOption, allOptions, callback) {
         Array.from(allOptions || []).forEach((option) => {
+            option.classList.remove('correct', 'wrong');
             option.disabled = true;
             option.onclick = null;
         });
@@ -170,10 +171,16 @@ class AnimationSystem {
             }
         }
 
-        setTimeout(callback, this.prefersReducedMotion ? 250 : 1000);
+        setTimeout(() => {
+            Array.from(allOptions || []).forEach((option) => {
+                option.classList.remove('correct', 'wrong');
+            });
+            callback();
+        }, this.prefersReducedMotion ? 250 : 1000);
     }
 
     handleWrongAnswer(option) {
+        option.classList.remove('correct');
         option.classList.add('wrong');
         setTimeout(() => option.classList.remove('wrong'), 500);
     }

@@ -161,7 +161,7 @@ h1 {
     animation: shake 0.5s;
 }
 
-.option.correct {
+.option.correct:disabled {
     background-color: var(--success);
     animation: correct 0.5s;
 }
@@ -998,8 +998,8 @@ input:checked + .slider:before,
     background-color: #effffd;
 }
 
-.fraction-choice-option.correct,
-.fraction-choice-option.correct:hover {
+.fraction-choice-option.correct:disabled,
+.fraction-choice-option.correct:disabled:hover {
     background-color: var(--success);
     border-color: var(--success);
     color: #ffffff;
@@ -1034,10 +1034,12 @@ input:checked + .slider:before,
     height: auto;
     display: block;
     margin: 0 auto;
+    max-height: min(34vh, 260px);
 }
 
 .fraction-pie-compact {
     width: min(140px, 42vw);
+    max-height: min(18vh, 140px);
 }
 
 .pie-slice-shaded {
@@ -1080,9 +1082,10 @@ input:checked + .slider:before,
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 18px;
+    gap: 14px;
     margin: 8px auto 18px;
-    max-width: 680px;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .cup {
@@ -1185,6 +1188,13 @@ input:checked + .slider:before,
     margin: 16px auto;
 }
 
+@media (max-width: 640px) {
+    .order-slots,
+    .fraction-card-bank {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 .order-slot,
 .fraction-card {
     min-height: 82px;
@@ -1256,7 +1266,7 @@ input:checked + .slider:before,
 
 .number-line-track {
     position: relative;
-    width: min(720px, 100%);
+    width: min(720px, calc(100% - 40px));
     height: 118px;
     margin: 28px auto 8px;
 }
@@ -1443,6 +1453,12 @@ input:checked + .slider:before,
 
     .options {
         grid-template-columns: 1fr;
+        margin: 20px auto;
+    }
+
+    .fraction-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
     }
 
     .header-container {
@@ -1456,6 +1472,7 @@ input:checked + .slider:before,
 
     .problem {
         padding: 20px;
+        margin: 20px auto;
     }
 
     .diagram-panel {
@@ -1471,14 +1488,15 @@ input:checked + .slider:before,
         min-height: var(--touch-target);
     }
 
+    .fraction-choice-option {
+        min-height: 76px;
+        padding: 14px;
+    }
+
     .navigation {
         flex-direction: column;
         align-items: stretch;
-    }
-
-    .order-slots,
-    .fraction-card-bank {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 20px auto;
     }
 
     .fraction-actions {
@@ -1513,6 +1531,12 @@ input:checked + .slider:before,
 
     .home-page::before {
         background-size: 28px 28px;
+    }
+}
+
+@media (max-width: 560px) {
+    .fraction-options {
+        grid-template-columns: 1fr;
     }
 }
 
