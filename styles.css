@@ -161,7 +161,7 @@ h1 {
     animation: shake 0.5s;
 }
 
-.option.correct {
+.option.correct:disabled {
     background-color: var(--success);
     animation: correct 0.5s;
 }
@@ -998,8 +998,8 @@ input:checked + .slider:before,
     background-color: #effffd;
 }
 
-.fraction-choice-option.correct,
-.fraction-choice-option.correct:hover {
+.fraction-choice-option.correct:disabled,
+.fraction-choice-option.correct:disabled:hover {
     background-color: var(--success);
     border-color: var(--success);
     color: #ffffff;
@@ -1080,9 +1080,10 @@ input:checked + .slider:before,
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 18px;
+    gap: 14px;
     margin: 8px auto 18px;
-    max-width: 680px;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .cup {
