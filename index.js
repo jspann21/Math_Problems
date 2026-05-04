@@ -26,7 +26,10 @@ function renderTopicSection(topic) {
 
   return `
     <section class="topic-section" aria-label="${topic.title}">
-      <h2 class="topic-title">${topic.title}</h2>
+      <h2 class="topic-title">
+        <span>${topic.title}</span>
+        ${topic.badge ? `<span class="new-badge topic-badge">${topic.badge}</span>` : ''}
+      </h2>
       <div class="problem-links">
         ${links}
       </div>

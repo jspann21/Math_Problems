@@ -30,6 +30,36 @@ export const topicCatalog = [
     ],
   },
   {
+    title: 'Mass & Liquid Volume',
+    badge: 'New',
+    problems: [
+      {
+        label: 'Mass & Capacity Estimates',
+        href: 'mass-liquid-volume.html?type=estimates',
+        icon: '⚖️',
+        badge: 'New',
+      },
+      {
+        label: 'Read Scales & Containers',
+        href: 'mass-liquid-volume.html?type=scales',
+        icon: '🧪',
+        badge: 'New',
+      },
+      {
+        label: 'Balance Scale Reasoning',
+        href: 'mass-liquid-volume.html?type=balance',
+        icon: '⚖️',
+        badge: 'New',
+      },
+      {
+        label: 'Solve Mass & Volume Stories',
+        href: 'mass-liquid-volume.html?type=word',
+        icon: '📝',
+        badge: 'New',
+      },
+    ],
+  },
+  {
     title: 'Basic Operations',
     problems: [
       {
