@@ -33,7 +33,15 @@
                     <p class="rounding-step" id="problem-count"></p>
                     <h2 class="problem-question" id="rounding-question"></h2>
 
-                    <div class="rounding-visual" aria-label="Rounding visual">
+                    <button
+                        class="hint-button"
+                        id="hint-button"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="rounding-visual"
+                    >💡 Show hint</button>
+
+                    <div class="rounding-visual" id="rounding-visual" aria-label="Rounding visual" hidden>
                         <div class="place-value-wrap">
                             <p class="visual-heading">1. Find the rounding place. Then look one digit right.</p>
                             <div class="place-value-grid" id="place-value-grid"></div>

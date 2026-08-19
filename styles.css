@@ -2105,10 +2105,38 @@ input:checked + .slider:before,
     font-size: clamp(1.35rem, 3vw, 2rem);
 }
 
+.hint-button {
+    min-height: var(--touch-target);
+    margin-top: 18px;
+    padding: 10px 22px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background-color: var(--secondary);
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.hint-button:hover {
+    background-color: var(--secondary-strong);
+    transform: translateY(-1px);
+}
+
+.hint-button:focus-visible {
+    outline: 3px solid rgba(17, 132, 220, 0.25);
+    outline-offset: 3px;
+}
+
 .rounding-visual {
     margin-top: 22px;
     display: grid;
     gap: 20px;
+}
+
+.rounding-visual[hidden] {
+    display: none;
 }
 
 .place-value-wrap,
