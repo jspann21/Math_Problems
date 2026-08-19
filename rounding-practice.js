@@ -10,6 +10,8 @@ const MAX_QUESTIONS = 20;
 const modeSelect = document.getElementById('rounding-mode');
 const problemCount = document.getElementById('problem-count');
 const question = document.getElementById('rounding-question');
+const hintButton = document.getElementById('hint-button');
+const roundingVisual = document.getElementById('rounding-visual');
 const placeValueGrid = document.getElementById('place-value-grid');
 const digitRule = document.getElementById('digit-rule');
 const numberLineHeading = document.getElementById('number-line-heading');
@@ -156,8 +158,15 @@ function setNavigationState() {
     nextButton.disabled = currentProblemIndex >= MAX_QUESTIONS - 1;
 }
 
+function setHintVisibility(isVisible) {
+    roundingVisual.hidden = !isVisible;
+    hintButton.setAttribute('aria-expanded', String(isVisible));
+    hintButton.textContent = isVisible ? 'Hide hint' : '💡 Show hint';
+}
+
 function displayProblem() {
     const problem = problems[currentProblemIndex];
+    setHintVisibility(false);
     problemCount.textContent = `Question ${currentProblemIndex + 1} of ${MAX_QUESTIONS}`;
     question.textContent = `Round ${formatNumber(problem.value)} to the nearest ${formatNumber(problem.unit)}.`;
 
@@ -212,6 +221,9 @@ function resetPractice() {
 document.addEventListener('DOMContentLoaded', () => {
     setupScratchpad();
 
+    hintButton.addEventListener('click', () => {
+        setHintVisibility(roundingVisual.hidden);
+    });
     modeSelect.addEventListener('change', resetPractice);
     prevButton.addEventListener('click', () => goToProblem(currentProblemIndex - 1));
     nextButton.addEventListener('click', () => goToProblem(currentProblemIndex + 1));
