@@ -60,6 +60,18 @@ export const topicCatalog = [
     ],
   },
   {
+    title: 'Place Value & Rounding',
+    badge: 'New',
+    problems: [
+      {
+        label: 'Visual Rounding Practice',
+        href: 'rounding-practice.html',
+        icon: '🎯',
+        badge: 'New',
+      },
+    ],
+  },
+  {
     title: 'Basic Operations',
     problems: [
       {

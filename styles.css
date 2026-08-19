@@ -2055,3 +2055,266 @@ input:checked + .slider:before,
         font-size: 12px;
     }
 }
+
+/* Visual rounding practice */
+.rounding-page {
+    max-width: 950px;
+}
+
+.rounding-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto 18px;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.rounding-select {
+    min-height: var(--touch-target);
+    min-width: 140px;
+    padding: 8px 38px 8px 14px;
+    border: 2px solid var(--secondary);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.rounding-select:focus-visible {
+    outline: 3px solid rgba(17, 132, 220, 0.25);
+    outline-offset: 2px;
+}
+
+.rounding-problem {
+    padding: 24px;
+    margin-top: 0;
+}
+
+.rounding-step {
+    margin: 0 0 6px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.rounding-problem .problem-question {
+    font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.rounding-visual {
+    margin-top: 22px;
+    display: grid;
+    gap: 20px;
+}
+
+.place-value-wrap,
+.rounding-number-line-wrap {
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--surface-soft);
+    border: 2px solid #d6eaf4;
+}
+
+.visual-heading {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.place-value-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.place-value-cell {
+    min-width: 0;
+    padding: 8px 4px;
+    border-radius: 10px;
+    background-color: #eaf3f8;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.place-value-cell.rounding-place {
+    background-color: #dff7f3;
+    border-color: var(--primary);
+}
+
+.place-value-cell.deciding-place {
+    background-color: #fff4cc;
+    border-color: #d89a00;
+}
+
+.place-value-label {
+    color: var(--text-muted);
+    font-size: clamp(0.64rem, 1.7vw, 0.86rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.place-value-label-short {
+    display: none;
+}
+
+.place-value-digit {
+    font-size: clamp(1.55rem, 5vw, 2.35rem);
+    line-height: 1;
+}
+
+.place-value-note {
+    min-height: 1em;
+    color: var(--text);
+    font-size: clamp(0.62rem, 1.6vw, 0.78rem);
+    font-weight: 800;
+}
+
+.digit-rule {
+    margin: 12px 0 0;
+    min-height: 1.5em;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.rounding-number-line {
+    position: relative;
+    height: 112px;
+    margin: 2px 26px 0;
+}
+
+.rounding-line-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52px;
+    height: 5px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--secondary) 0 50%, var(--primary) 50% 100%);
+}
+
+.rounding-benchmark {
+    position: absolute;
+    top: 36px;
+    transform: translateX(-50%);
+}
+
+.rounding-benchmark-low {
+    left: 0;
+}
+
+.rounding-benchmark-mid {
+    left: 50%;
+}
+
+.rounding-benchmark-high {
+    left: 100%;
+}
+
+.rounding-tick {
+    display: block;
+    width: 5px;
+    height: 37px;
+    margin: 0 auto;
+    border-radius: 999px;
+    background-color: #315369;
+}
+
+.rounding-mid-tick {
+    height: 31px;
+    background-color: #d89a00;
+}
+
+.rounding-line-label {
+    display: block;
+    margin-top: 5px;
+    font-size: clamp(0.76rem, 2vw, 1rem);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.rounding-marker {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    min-width: max-content;
+    color: var(--text);
+    font-size: clamp(0.82rem, 2vw, 1rem);
+    font-weight: 800;
+    transition: left 0.25s ease;
+}
+
+.rounding-marker-pin {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 3px auto 0;
+    border-radius: 50% 50% 50% 0;
+    background-color: var(--danger);
+    transform: rotate(-45deg);
+    box-shadow: 0 3px 6px rgba(16, 50, 72, 0.2);
+}
+
+.rounding-number-line.single-value .rounding-line-track {
+    background-color: var(--secondary);
+    background-image: none;
+}
+
+.rounding-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 22px;
+}
+
+@media (max-width: 600px) {
+    .rounding-controls {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .rounding-select {
+        width: min(100%, 280px);
+    }
+
+    .rounding-problem {
+        padding: 14px;
+    }
+
+    .place-value-wrap,
+    .rounding-number-line-wrap {
+        padding: 12px 8px;
+    }
+
+    .place-value-grid {
+        gap: 3px;
+    }
+
+    .place-value-label-long {
+        display: none;
+    }
+
+    .place-value-label-short {
+        display: inline;
+        overflow-wrap: normal;
+        white-space: nowrap;
+    }
+
+    .place-value-cell {
+        padding: 7px 2px;
+    }
+
+    .rounding-number-line {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .rounding-options {
+        grid-template-columns: 1fr;
+    }
+}

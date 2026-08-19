@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Rounding Practice</title>
+    <meta name="description" content="Practice rounding whole numbers with a place-value chart and number line.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-content">
+        <div class="problem-area">
+            <div class="header-container">
+                <a href="index.html" class="home-button">🏠 Home</a>
+                <h1>Visual Rounding Practice 🔍</h1>
+                <button class="toggle-scratchpad" id="toggle-scratchpad">📝 Open Scratchpad</button>
+            </div>
+
+            <div class="container rounding-page">
+                <div class="rounding-controls">
+                    <label for="rounding-mode">Round to the nearest</label>
+                    <select id="rounding-mode" class="rounding-select">
+                        <option value="1">1</option>
+                        <option value="10">10</option>
+                        <option value="100">100</option>
+                        <option value="1000" selected>1,000</option>
+                        <option value="10000">10,000</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
+                </div>
+
+                <section class="problem rounding-problem" aria-labelledby="rounding-question">
+                    <p class="rounding-step" id="problem-count"></p>
+                    <h2 class="problem-question" id="rounding-question"></h2>
+
+                    <div class="rounding-visual" aria-label="Rounding visual">
+                        <div class="place-value-wrap">
+                            <p class="visual-heading">1. Find the rounding place. Then look one digit right.</p>
+                            <div class="place-value-grid" id="place-value-grid"></div>
+                            <p class="digit-rule" id="digit-rule"></p>
+                        </div>
+
+                        <div class="rounding-number-line-wrap">
+                            <p class="visual-heading" id="number-line-heading">2. See which benchmark is closer.</p>
+                            <div class="rounding-number-line" id="rounding-number-line">
+                                <div class="rounding-line-track" aria-hidden="true"></div>
+                                <div class="rounding-benchmark rounding-benchmark-low">
+                                    <span class="rounding-tick"></span>
+                                    <span class="rounding-line-label" id="lower-label"></span>
+                                </div>
+                                <div class="rounding-benchmark rounding-benchmark-mid">
+                                    <span class="rounding-tick rounding-mid-tick"></span>
+                                    <span class="rounding-line-label" id="midpoint-label"></span>
+                                </div>
+                                <div class="rounding-benchmark rounding-benchmark-high">
+                                    <span class="rounding-tick"></span>
+                                    <span class="rounding-line-label" id="upper-label"></span>
+                                </div>
+                                <div class="rounding-marker" id="number-marker">
+                                    <span id="marker-label"></span>
+                                    <span class="rounding-marker-pin" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="options rounding-options" id="options-container" aria-label="Answer choices"></div>
+
+                <div class="navigation">
+                    <button class="nav-button" id="prev-btn">← Previous</button>
+                    <button class="nav-button" id="next-btn">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="scratchpad-area" id="scratchpad-area">
+            <div class="scratchpad-controls">
+                <button class="scratchpad-button" id="undo-btn">↩️ Undo</button>
+                <button class="scratchpad-button" id="redo-btn">↪️ Redo</button>
+                <button class="scratchpad-button clear" id="clear-btn">🗑️ Clear</button>
+                <button class="scratchpad-button" id="close-scratchpad">❌ Close</button>
+            </div>
+            <canvas class="scratchpad-canvas" id="scratchpad"></canvas>
+        </div>
+    </div>
+
+    <div class="problem-type">Visual Rounding Practice</div>
+    <div class="stars" id="stars-container"></div>
+    <script src="rounding-practice.js" type="module" defer></script>
+</body>
+</html>
