@@ -10,8 +10,7 @@ const names = [
 
 // Actions and objects for word problems
 const actions = {
-    use: ['uses', 'used', 'cut', 'cuts', 'needed'],
-    have: ['has', 'had', 'has left', 'had left', 'remaining']
+    use: ['used', 'cut']
 };
 
 const objects = {
@@ -62,9 +61,9 @@ function generateProblem() {
     const purpose2 = getRandomElement(purposes[object].filter(p => p !== purpose1));
 
     // Generate problem text
-    const problemText = `${name1} ${getRandomElement(actions.have)} ${total} ${unit} of ${object}. ` +
+    const problemText = `${name1} had ${total} ${unit} of ${object}. ` +
         `${name1} ${getRandomElement(actions.use)} ${used1} ${unit} for ${purpose1} and some for ${purpose2}. ` +
-        `${name1} ${getRandomElement(actions.have)} ${remaining} ${unit} left. ` +
+        `${name1} had ${remaining} ${unit} left. ` +
         `How much ${object} did ${name1} use for ${purpose2}?`;
 
     // Generate wrong answers that are close to the correct answer but always positive
