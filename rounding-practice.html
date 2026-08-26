@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Rounding Practice</title>
-    <meta name="description" content="Practice rounding whole numbers with a place-value chart and number line.">
+    <title>Rounding Numbers Practice</title>
+    <meta name="description" content="Practice rounding whole numbers with halfway points, benchmarks, and number lines.">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
         <div class="problem-area">
             <div class="header-container">
                 <a href="index.html" class="home-button">🏠 Home</a>
-                <h1>Visual Rounding Practice 🔍</h1>
+                <h1>Rounding Numbers 🔍</h1>
                 <button class="toggle-scratchpad" id="toggle-scratchpad">📝 Open Scratchpad</button>
             </div>
 
@@ -20,12 +20,13 @@
                 <div class="rounding-controls">
                     <label for="rounding-mode">Round to the nearest</label>
                     <select id="rounding-mode" class="rounding-select">
-                        <option value="1">1</option>
                         <option value="10">10</option>
                         <option value="100">100</option>
-                        <option value="1000" selected>1,000</option>
-                        <option value="10000">10,000</option>
-                        <option value="mixed">Mixed</option>
+                        <option value="1000">1,000</option>
+                        <option value="10000" selected>10,000</option>
+                        <option value="100000">100,000</option>
+                        <option value="mixed-large">10,000 &amp; 100,000</option>
+                        <option value="mixed">All place values</option>
                     </select>
                 </div>
 
@@ -43,7 +44,7 @@
 
                     <div class="rounding-visual" id="rounding-visual" aria-label="Rounding visual" hidden>
                         <div class="place-value-wrap">
-                            <p class="visual-heading">1. Find the rounding place. Then look one digit right.</p>
+                            <p class="visual-heading" id="place-value-heading">1. Find the rounding place. Then look one digit right.</p>
                             <div class="place-value-grid" id="place-value-grid"></div>
                             <p class="digit-rule" id="digit-rule"></p>
                         </div>
@@ -93,7 +94,7 @@
         </div>
     </div>
 
-    <div class="problem-type">Visual Rounding Practice</div>
+    <div class="problem-type">Rounding Numbers</div>
     <div class="stars" id="stars-container"></div>
     <script src="rounding-practice.js" type="module" defer></script>
 </body>

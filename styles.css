@@ -2156,7 +2156,7 @@ input:checked + .slider:before,
 
 .place-value-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 6px;
 }
 
@@ -2290,14 +2290,16 @@ input:checked + .slider:before,
     box-shadow: 0 3px 6px rgba(16, 50, 72, 0.2);
 }
 
-.rounding-number-line.single-value .rounding-line-track {
-    background-color: var(--secondary);
-    background-image: none;
-}
-
 .rounding-options {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 22px;
+}
+
+.rounding-options .option {
+    min-height: 72px;
+    height: auto;
+    padding: 14px 18px;
+    line-height: 1.25;
 }
 
 @media (max-width: 600px) {
@@ -2335,6 +2337,14 @@ input:checked + .slider:before,
 
     .place-value-cell {
         padding: 7px 2px;
+    }
+
+    .place-value-label {
+        font-size: 0.58rem;
+    }
+
+    .place-value-digit {
+        font-size: clamp(1.2rem, 6vw, 1.8rem);
     }
 
     .rounding-number-line {
