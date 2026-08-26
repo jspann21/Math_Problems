@@ -64,8 +64,20 @@ export const topicCatalog = [
     badge: 'New',
     problems: [
       {
-        label: 'Visual Rounding Practice',
-        href: 'rounding-practice.html',
+        label: 'Nearest Ten Thousand',
+        href: 'rounding-practice.html?mode=10000',
+        icon: '🎯',
+        badge: 'New',
+      },
+      {
+        label: 'Nearest Hundred Thousand',
+        href: 'rounding-practice.html?mode=100000',
+        icon: '🎯',
+        badge: 'New',
+      },
+      {
+        label: 'Mixed Rounding Practice',
+        href: 'rounding-practice.html?mode=mixed-large',
         icon: '🎯',
         badge: 'New',
       },

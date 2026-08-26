@@ -1,10 +1,18 @@
 import { animationSystem } from './animations.js';
 import { setupScratchpad, shuffleArray } from './shared.js';
 
-const ROUNDING_UNITS = [1, 10, 100, 1000, 10000];
-const PLACE_LABELS = ['Ten-thousands', 'Thousands', 'Hundreds', 'Tens', 'Ones'];
-const SHORT_PLACE_LABELS = ['10,000s', '1,000s', '100s', '10s', '1s'];
-const PLACE_UNITS = [10000, 1000, 100, 10, 1];
+const ROUNDING_UNITS = [10, 100, 1000, 10000, 100000];
+const LARGE_ROUNDING_UNITS = [10000, 100000];
+const PLACE_LABELS = ['Hundred-thousands', 'Ten-thousands', 'Thousands', 'Hundreds', 'Tens', 'Ones'];
+const SHORT_PLACE_LABELS = ['100,000s', '10,000s', '1,000s', '100s', '10s', '1s'];
+const PLACE_UNITS = [100000, 10000, 1000, 100, 10, 1];
+const QUESTION_PATTERN = ['round', 'relationship', 'nearer', 'round', 'boundary'];
+const QUESTION_LABELS = {
+    round: 'Round the number',
+    relationship: 'Compare with halfway',
+    nearer: 'Choose the nearer benchmark',
+    boundary: 'Find the rounding range',
+};
 const MAX_QUESTIONS = 20;
 
 const modeSelect = document.getElementById('rounding-mode');
@@ -12,6 +20,7 @@ const problemCount = document.getElementById('problem-count');
 const question = document.getElementById('rounding-question');
 const hintButton = document.getElementById('hint-button');
 const roundingVisual = document.getElementById('rounding-visual');
+const placeValueHeading = document.getElementById('place-value-heading');
 const placeValueGrid = document.getElementById('place-value-grid');
 const digitRule = document.getElementById('digit-rule');
 const numberLineHeading = document.getElementById('number-line-heading');
@@ -32,76 +41,161 @@ function formatNumber(value) {
     return value.toLocaleString('en-US');
 }
 
+function formatChoice(value) {
+    return typeof value === 'number' ? formatNumber(value) : value;
+}
+
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function getSelectedUnit() {
+    if (modeSelect.value === 'mixed-large') {
+        return LARGE_ROUNDING_UNITS[randomInteger(0, LARGE_ROUNDING_UNITS.length - 1)];
+    }
+
     if (modeSelect.value === 'mixed') {
         return ROUNDING_UNITS[randomInteger(0, ROUNDING_UNITS.length - 1)];
     }
+
     return Number(modeSelect.value);
 }
 
-function getNumberForUnit(unit) {
-    if (unit === 1) {
-        return randomInteger(101, 99999);
-    }
-
-    const minimum = unit === 10000 ? 10000 : Math.max(101, unit);
-    let value = randomInteger(minimum, 99999);
-
-    // Keep the deciding digit meaningful, with extra practice close to the midpoint.
-    if (unit === 1000 && Math.random() < 0.55) {
-        const lower = randomInteger(1, 98) * unit;
-        const midpointOffset = randomInteger(-180, 180);
-        value = Math.min(99999, Math.max(1000, lower + unit / 2 + midpointOffset));
-    }
-
-    if (value % unit === 0) {
-        value += randomInteger(1, Math.max(1, unit - 1));
-    }
-
-    return Math.min(value, 99999);
+function getMaximumValue(unit) {
+    return unit >= 10000 ? 999999 : 99999;
 }
 
-function makeChoices(value, unit, lower, upper, answer) {
-    const choices = new Set([answer]);
+function getNumberForUnit(unit, kind) {
+    const maximum = getMaximumValue(unit);
+    const lowerMultiplier = randomInteger(0, Math.floor(maximum / unit));
+    const lower = lowerMultiplier * unit;
+    const maximumOffset = Math.min(unit - 1, maximum - lower);
+    const midpointOffset = unit / 2;
+    let offset;
 
-    if (unit === 1) {
-        [value - 1, value + 1, value + 10, value - 10, value + 2].forEach((choice) => {
-            if (choice >= 0) choices.add(choice);
-        });
+    const midpointChance = kind === 'relationship' ? 0.34 : 0.2;
+    if (maximumOffset >= midpointOffset && Math.random() < midpointChance) {
+        offset = midpointOffset;
+    } else if (maximumOffset >= midpointOffset && Math.random() < 0.55) {
+        const spread = Math.max(1, Math.floor(unit * 0.18));
+        offset = midpointOffset + randomInteger(-spread, spread);
     } else {
-        [lower, upper, lower - unit, upper + unit, answer - 2 * unit, answer + 2 * unit].forEach((choice) => {
-            if (choice >= 0) choices.add(choice);
-        });
+        offset = randomInteger(Math.min(1, maximumOffset), maximumOffset);
     }
+
+    if (kind === 'nearer' && offset === midpointOffset) {
+        offset += midpointOffset < maximumOffset ? 1 : -1;
+    }
+
+    return lower + offset;
+}
+
+function makeRoundChoices(problem) {
+    const choices = new Set([problem.answer]);
+
+    [
+        problem.lower,
+        problem.upper,
+        problem.value,
+        problem.midpoint,
+        problem.answer - problem.unit,
+        problem.answer + problem.unit,
+    ].forEach((choice) => {
+        if (choice >= 0) choices.add(choice);
+    });
 
     return shuffleArray(Array.from(choices).slice(0, 4));
 }
 
-function createProblem() {
-    const unit = getSelectedUnit();
-    const value = getNumberForUnit(unit);
-    const lower = unit === 1 ? value : Math.floor(value / unit) * unit;
-    const upper = unit === 1 ? value : lower + unit;
-    const midpoint = unit === 1 ? value : lower + unit / 2;
-    const answer = unit === 1 ? value : Math.round(value / unit) * unit;
+function makeNearerChoices(problem) {
+    const choices = new Set([
+        problem.answer,
+        problem.answer === problem.lower ? problem.upper : problem.lower,
+        Math.max(0, problem.lower - problem.unit),
+        problem.upper + problem.unit,
+    ]);
 
-    return {
-        value,
+    return shuffleArray(Array.from(choices).slice(0, 4));
+}
+
+function makeBoundaryChoices(problem) {
+    const choices = new Set([problem.answer]);
+    [
+        problem.answer - 1,
+        problem.answer + 1,
+        problem.least,
+        problem.greatest,
+        problem.least - 1,
+        problem.greatest + 1,
+        problem.target,
+    ].forEach((choice) => {
+        if (choice >= 0) choices.add(choice);
+    });
+
+    return shuffleArray(Array.from(choices).slice(0, 4));
+}
+
+function createBoundaryProblem(unit, index) {
+    const maximumTargetMultiplier = Math.max(1, Math.floor(getMaximumValue(unit) / unit));
+    const target = randomInteger(1, maximumTargetMultiplier) * unit;
+    const least = target - unit / 2;
+    const greatest = target + unit / 2 - 1;
+    const asksForLeast = index % 2 === 0;
+    const answer = asksForLeast ? least : greatest;
+    const problem = {
+        kind: 'boundary',
         unit,
-        lower,
-        upper,
-        midpoint,
+        target,
+        least,
+        greatest,
+        asksForLeast,
         answer,
-        choices: makeChoices(value, unit, lower, upper, answer),
+        prompt: `A whole number rounds to ${formatNumber(target)} when rounded to the nearest ${formatNumber(unit)}. What is the ${asksForLeast ? 'least' : 'greatest'} possible whole number?`,
     };
+
+    problem.choices = makeBoundaryChoices(problem);
+    return problem;
+}
+
+function createRoundingProblem(unit, kind) {
+    const value = getNumberForUnit(unit, kind);
+    const lower = Math.floor(value / unit) * unit;
+    const upper = lower + unit;
+    const midpoint = lower + unit / 2;
+    const roundedAnswer = Math.round(value / unit) * unit;
+    const problem = { kind, value, unit, lower, upper, midpoint };
+
+    if (kind === 'relationship') {
+        problem.answer = value < midpoint ? 'Less than' : value > midpoint ? 'Greater than' : 'Exactly at';
+        problem.prompt = `Where is ${formatNumber(value)} compared with the halfway point, ${formatNumber(midpoint)}?`;
+        problem.choices = shuffleArray(['Less than', 'Greater than', 'Exactly at']);
+    } else if (kind === 'nearer') {
+        problem.answer = value < midpoint ? lower : upper;
+        problem.prompt = `Which benchmark is ${formatNumber(value)} nearer to?`;
+        problem.choices = makeNearerChoices(problem);
+    } else {
+        problem.answer = roundedAnswer;
+        problem.prompt = `Round ${formatNumber(value)} to the nearest ${formatNumber(unit)}.`;
+        problem.choices = makeRoundChoices(problem);
+    }
+
+    return problem;
+}
+
+function createProblem(index) {
+    const unit = getSelectedUnit();
+    const kind = QUESTION_PATTERN[index % QUESTION_PATTERN.length];
+
+    if (kind === 'boundary') {
+        return createBoundaryProblem(unit, index);
+    }
+
+    return createRoundingProblem(unit, kind);
 }
 
 function renderPlaceValue(problem) {
-    const digits = String(problem.value).padStart(5, '0').split('');
+    const visualValue = problem.kind === 'boundary' ? problem.answer : problem.value;
+    const digits = String(visualValue).padStart(6, '0').split('');
     const targetIndex = PLACE_UNITS.indexOf(problem.unit);
     const decidingIndex = targetIndex + 1;
 
@@ -121,30 +215,32 @@ function renderPlaceValue(problem) {
         `;
     }).join('');
 
-    if (problem.unit === 1) {
-        digitRule.textContent = 'Ones is the last place. A whole number stays the same when rounded to the nearest 1.';
+    if (problem.kind === 'boundary') {
+        placeValueHeading.textContent = `1. Check the ${problem.asksForLeast ? 'least' : 'greatest'} boundary number.`;
+        digitRule.innerHTML = `<strong>${formatNumber(problem.least)} through ${formatNumber(problem.greatest)}</strong> all round to ${formatNumber(problem.target)}.`;
         return;
     }
+
+    placeValueHeading.textContent = '1. Find the rounding place. Then look one digit right.';
 
     const decidingDigit = digits[decidingIndex];
     digitRule.innerHTML = `<strong>The deciding digit is ${decidingDigit}.</strong> ${Number(decidingDigit) >= 5 ? `${decidingDigit} is 5 or more, so round up.` : `${decidingDigit} is 4 or less, so round down.`}`;
 }
 
 function renderNumberLine(problem) {
-    markerLabel.textContent = formatNumber(problem.value);
-
-    if (problem.unit === 1) {
-        numberLine.classList.add('single-value');
-        numberLineHeading.textContent = '2. The number is already on an exact one.';
-        lowerLabel.textContent = formatNumber(problem.value - 1);
-        midpointLabel.textContent = formatNumber(problem.value);
-        upperLabel.textContent = formatNumber(problem.value + 1);
-        marker.style.left = '50%';
+    if (problem.kind === 'boundary') {
+        numberLineHeading.textContent = '2. The rounding range lies between the two halfway points.';
+        lowerLabel.textContent = formatNumber(problem.target - problem.unit);
+        midpointLabel.textContent = formatNumber(problem.target);
+        upperLabel.textContent = formatNumber(problem.target + problem.unit);
+        markerLabel.textContent = formatNumber(problem.answer);
+        marker.style.left = problem.asksForLeast ? '25%' : '75%';
         return;
     }
 
-    numberLine.classList.remove('single-value');
-    numberLineHeading.textContent = '2. See which benchmark is closer.';
+    markerLabel.textContent = formatNumber(problem.value);
+
+    numberLineHeading.textContent = `${formatNumber(problem.midpoint)} is halfway between the two benchmarks.`;
     lowerLabel.textContent = formatNumber(problem.lower);
     midpointLabel.textContent = formatNumber(problem.midpoint);
     upperLabel.textContent = formatNumber(problem.upper);
@@ -167,8 +263,8 @@ function setHintVisibility(isVisible) {
 function displayProblem() {
     const problem = problems[currentProblemIndex];
     setHintVisibility(false);
-    problemCount.textContent = `Question ${currentProblemIndex + 1} of ${MAX_QUESTIONS}`;
-    question.textContent = `Round ${formatNumber(problem.value)} to the nearest ${formatNumber(problem.unit)}.`;
+    problemCount.textContent = `Question ${currentProblemIndex + 1} of ${MAX_QUESTIONS} · ${QUESTION_LABELS[problem.kind]}`;
+    question.textContent = problem.prompt;
 
     renderPlaceValue(problem);
     renderNumberLine(problem);
@@ -177,7 +273,7 @@ function displayProblem() {
     problem.choices.forEach((choice) => {
         const button = document.createElement('button');
         button.className = 'option';
-        button.textContent = formatNumber(choice);
+        button.textContent = formatChoice(choice);
         button.addEventListener('click', () => handleOptionClick(button, choice));
         optionsContainer.appendChild(button);
     });
@@ -189,7 +285,7 @@ function goToProblem(index) {
     if (index < 0 || index >= MAX_QUESTIONS) return;
 
     while (problems.length <= index) {
-        problems.push(createProblem());
+        problems.push(createProblem(problems.length));
     }
 
     currentProblemIndex = index;
@@ -213,13 +309,21 @@ function handleOptionClick(selectedOption, selectedValue) {
 }
 
 function resetPractice() {
-    problems = [createProblem()];
+    problems = [createProblem(0)];
     currentProblemIndex = 0;
     displayProblem();
 }
 
+function setInitialMode() {
+    const requestedMode = new URLSearchParams(window.location.search).get('mode');
+    if (requestedMode && modeSelect.querySelector(`option[value="${requestedMode}"]`)) {
+        modeSelect.value = requestedMode;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setupScratchpad();
+    setInitialMode();
 
     hintButton.addEventListener('click', () => {
         setHintVisibility(roundingVisual.hidden);
