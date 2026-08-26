@@ -3,6 +3,12 @@ import { setupScratchpad, shuffleArray } from './shared.js';
 
 const ROUNDING_UNITS = [10, 100, 1000, 10000, 100000];
 const LARGE_ROUNDING_UNITS = [10000, 100000];
+const DEFAULT_ROUNDING_MODE = '10000';
+const VALID_ROUNDING_MODES = new Set([
+    ...ROUNDING_UNITS.map(String),
+    'mixed-large',
+    'mixed',
+]);
 const PLACE_LABELS = ['Hundred-thousands', 'Ten-thousands', 'Thousands', 'Hundreds', 'Tens', 'Ones'];
 const SHORT_PLACE_LABELS = ['100,000s', '10,000s', '1,000s', '100s', '10s', '1s'];
 const PLACE_UNITS = [100000, 10000, 1000, 100, 10, 1];
@@ -50,15 +56,23 @@ function randomInteger(min, max) {
 }
 
 function getSelectedUnit() {
-    if (modeSelect.value === 'mixed-large') {
+    const selectedMode = VALID_ROUNDING_MODES.has(modeSelect.value)
+        ? modeSelect.value
+        : DEFAULT_ROUNDING_MODE;
+
+    if (modeSelect.value !== selectedMode) {
+        modeSelect.value = selectedMode;
+    }
+
+    if (selectedMode === 'mixed-large') {
         return LARGE_ROUNDING_UNITS[randomInteger(0, LARGE_ROUNDING_UNITS.length - 1)];
     }
 
-    if (modeSelect.value === 'mixed') {
+    if (selectedMode === 'mixed') {
         return ROUNDING_UNITS[randomInteger(0, ROUNDING_UNITS.length - 1)];
     }
 
-    return Number(modeSelect.value);
+    return Number(selectedMode);
 }
 
 function getMaximumValue(unit) {
@@ -316,8 +330,12 @@ function resetPractice() {
 
 function setInitialMode() {
     const requestedMode = new URLSearchParams(window.location.search).get('mode');
-    if (requestedMode && modeSelect.querySelector(`option[value="${requestedMode}"]`)) {
+    if (VALID_ROUNDING_MODES.has(requestedMode)) {
         modeSelect.value = requestedMode;
+    }
+
+    if (!VALID_ROUNDING_MODES.has(modeSelect.value)) {
+        modeSelect.value = DEFAULT_ROUNDING_MODE;
     }
 }
 
