@@ -2302,6 +2302,61 @@ input:checked + .slider:before,
     line-height: 1.25;
 }
 
+.place-change-equation {
+    margin: 4px auto 16px;
+    font-size: clamp(1.25rem, 4vw, 1.8rem);
+    font-weight: 800;
+    color: var(--secondary-strong);
+}
+
+.place-change-table {
+    display: grid;
+    grid-template-columns: minmax(54px, auto) repeat(6, minmax(42px, 1fr));
+    gap: 5px;
+    align-items: stretch;
+}
+
+.place-change-label,
+.place-change-row-label,
+.place-change-digit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    border-radius: 9px;
+    font-weight: 800;
+}
+
+.place-change-label {
+    padding: 5px 2px;
+    color: var(--text-muted);
+    font-size: clamp(0.58rem, 1.7vw, 0.78rem);
+    overflow-wrap: anywhere;
+}
+
+.place-change-label-short {
+    display: none;
+}
+
+.place-change-row-label {
+    justify-content: flex-end;
+    padding-right: 5px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+.place-change-digit {
+    min-height: 48px;
+    background-color: #eaf3f8;
+    border: 2px solid transparent;
+    font-size: clamp(1.35rem, 5vw, 2rem);
+}
+
+.place-change-digit.changed-place {
+    background-color: #fff4cc;
+    border-color: #d89a00;
+}
+
 @media (max-width: 600px) {
     .rounding-controls {
         flex-direction: column;
@@ -2354,5 +2409,32 @@ input:checked + .slider:before,
 
     .rounding-options {
         grid-template-columns: 1fr;
+    }
+
+    .place-change-table {
+        grid-template-columns: 42px repeat(6, minmax(0, 1fr));
+        gap: 3px;
+    }
+
+    .place-change-label {
+        font-size: 0.55rem;
+    }
+
+    .place-change-label-long {
+        display: none;
+    }
+
+    .place-change-label-short {
+        display: inline;
+    }
+
+    .place-change-row-label {
+        padding-right: 2px;
+        font-size: 0.68rem;
+    }
+
+    .place-change-digit {
+        min-height: 40px;
+        font-size: clamp(1.05rem, 6vw, 1.55rem);
     }
 }
