@@ -19,7 +19,6 @@ const QUESTION_LABELS = {
     nearer: 'Choose the nearer benchmark',
     boundary: 'Find the rounding range',
 };
-const MAX_QUESTIONS = 20;
 
 const modeSelect = document.getElementById('rounding-mode');
 const problemCount = document.getElementById('problem-count');
@@ -265,7 +264,7 @@ function renderNumberLine(problem) {
 
 function setNavigationState() {
     prevButton.disabled = currentProblemIndex === 0;
-    nextButton.disabled = currentProblemIndex >= MAX_QUESTIONS - 1;
+    nextButton.disabled = false;
 }
 
 function setHintVisibility(isVisible) {
@@ -277,7 +276,7 @@ function setHintVisibility(isVisible) {
 function displayProblem() {
     const problem = problems[currentProblemIndex];
     setHintVisibility(false);
-    problemCount.textContent = `Question ${currentProblemIndex + 1} of ${MAX_QUESTIONS} · ${QUESTION_LABELS[problem.kind]}`;
+    problemCount.textContent = `Question ${currentProblemIndex + 1} · ${QUESTION_LABELS[problem.kind]}`;
     question.textContent = problem.prompt;
 
     renderPlaceValue(problem);
@@ -296,7 +295,7 @@ function displayProblem() {
 }
 
 function goToProblem(index) {
-    if (index < 0 || index >= MAX_QUESTIONS) return;
+    if (index < 0) return;
 
     while (problems.length <= index) {
         problems.push(createProblem(problems.length));
@@ -313,9 +312,7 @@ function handleOptionClick(selectedOption, selectedValue) {
     if (selectedValue === problem.answer) {
         const allOptions = optionsContainer.querySelectorAll('.option');
         animationSystem.handleCorrectAnswer(selectedOption, allOptions, () => {
-            if (currentProblemIndex < MAX_QUESTIONS - 1) {
-                goToProblem(currentProblemIndex + 1);
-            }
+            goToProblem(currentProblemIndex + 1);
         });
     } else {
         animationSystem.handleWrongAnswer(selectedOption);
