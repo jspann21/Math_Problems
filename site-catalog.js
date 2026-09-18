@@ -64,6 +64,12 @@ export const topicCatalog = [
     badge: 'New',
     problems: [
       {
+        label: 'Greater or Less by Place Value',
+        href: 'place-value-changes.html?mode=10000',
+        icon: '🔢',
+        badge: 'New',
+      },
+      {
         label: 'Nearest Ten Thousand',
         href: 'rounding-practice.html?mode=10000',
         icon: '🎯',
