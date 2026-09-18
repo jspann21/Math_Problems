@@ -25,7 +25,6 @@ const PLACE_LABELS = [
     ['1s', '1s'],
 ];
 const MAX_VALUE = 999999;
-const MAX_QUESTIONS = 20;
 
 const modeSelect = document.getElementById('place-value-mode');
 const problemCount = document.getElementById('problem-count');
@@ -155,7 +154,7 @@ function renderHint(problem) {
 
 function setNavigationState() {
     prevButton.disabled = currentProblemIndex === 0;
-    nextButton.disabled = currentProblemIndex >= MAX_QUESTIONS - 1;
+    nextButton.disabled = false;
 }
 
 function setHintVisibility(isVisible) {
@@ -167,7 +166,7 @@ function setHintVisibility(isVisible) {
 function displayProblem() {
     const problem = problems[currentProblemIndex];
     setHintVisibility(false);
-    problemCount.textContent = `Question ${currentProblemIndex + 1} of ${MAX_QUESTIONS}`;
+    problemCount.textContent = `Question ${currentProblemIndex + 1}`;
     question.textContent = problem.prompt;
     renderHint(problem);
 
@@ -184,7 +183,7 @@ function displayProblem() {
 }
 
 function goToProblem(index) {
-    if (index < 0 || index >= MAX_QUESTIONS) return;
+    if (index < 0) return;
 
     while (problems.length <= index) {
         problems.push(createProblem(problems.length));
@@ -201,9 +200,7 @@ function handleOptionClick(selectedOption, selectedValue) {
     if (selectedValue === problem.answer) {
         const allOptions = optionsContainer.querySelectorAll('.option');
         animationSystem.handleCorrectAnswer(selectedOption, allOptions, () => {
-            if (currentProblemIndex < MAX_QUESTIONS - 1) {
-                goToProblem(currentProblemIndex + 1);
-            }
+            goToProblem(currentProblemIndex + 1);
         });
     } else {
         animationSystem.handleWrongAnswer(selectedOption);
