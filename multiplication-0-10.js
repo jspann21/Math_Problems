@@ -1,9 +1,15 @@
 import { animationSystem } from './animations.js';
 import { setupScratchpad, shuffleArray } from './shared.js';
 
+const requestedFactor = new URLSearchParams(window.location.search).get('factor');
+const fixedFactor = ['11', '12'].includes(requestedFactor) ? Number(requestedFactor) : null;
+const maxFactor = fixedFactor === null ? 10 : 12;
+const maxProduct = (fixedFactor ?? maxFactor) * maxFactor;
+
 let currentProblemData = null;
 let problemHistory = [];
 let currentHistoryIndex = -1;
+let remainingFactors = [];
 
 const problemTextElement = document.getElementById('problem-text');
 const optionsContainer = document.getElementById('options-container');
@@ -11,7 +17,6 @@ const prevButton = document.getElementById('prev-problem');
 const nextButton = document.getElementById('next-problem');
 
 function generateOptions(correctAnswer) {
-    const maxProduct = 100;
     const options = new Set([correctAnswer]);
 
     while (options.size < 4) {
@@ -26,11 +31,20 @@ function generateOptions(correctAnswer) {
 }
 
 function generateProblem() {
-    const minFactor = 0;
-    const maxFactor = 10;
+    const num1 = fixedFactor ?? Math.floor(Math.random() * (maxFactor + 1));
+    let num2;
 
-    const num1 = Math.floor(Math.random() * (maxFactor - minFactor + 1)) + minFactor;
-    const num2 = Math.floor(Math.random() * (maxFactor - minFactor + 1)) + minFactor;
+    if (fixedFactor !== null) {
+        if (remainingFactors.length === 0) {
+            remainingFactors = shuffleArray(
+                Array.from({ length: maxFactor + 1 }, (_, factor) => factor)
+            );
+        }
+        num2 = remainingFactors.pop();
+    } else {
+        num2 = Math.floor(Math.random() * (maxFactor + 1));
+    }
+
     const correctAnswer = num1 * num2;
 
     return {
@@ -104,6 +118,14 @@ function handleOptionClick(selectedButton) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (fixedFactor !== null) {
+        const title = `Multiplication by ${fixedFactor} (0-12)`;
+        document.title = title;
+        const heading = document.querySelector('h1');
+        heading.textContent = heading.textContent.replace('Multiplication (0-10)', title);
+        document.querySelector('.problem-type').textContent = `${title} Problems`;
+    }
+
     setupScratchpad();
 
     optionsContainer.addEventListener('click', (event) => {

@@ -107,6 +107,16 @@ export const topicCatalog = [
         href: 'multiplication-0-10.html',
         icon: '✖️',
       },
+      {
+        label: 'Multiplication by 11 (0-12)',
+        href: 'multiplication-0-10.html?factor=11',
+        icon: '✖️',
+      },
+      {
+        label: 'Multiplication by 12 (0-12)',
+        href: 'multiplication-0-10.html?factor=12',
+        icon: '✖️',
+      },
     ],
   },
   {
